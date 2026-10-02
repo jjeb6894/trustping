@@ -1,0 +1,15 @@
+{
+  "countryCode": "GB",
+  "countryName": "United Kingdom",
+  "flag": "🇬🇧",
+  "brands": [
+    { "id": "gumtree", "name": "Gumtree", "category": "Classifieds", "segment": "trading", "icon": "🛒", "isGlobal": false },
+    { "id": "autotrader-uk", "name": "AutoTrader", "category": "Car Sales", "segment": "trading", "icon": "🚗", "isGlobal": false },
+    { "id": "ebay", "name": "eBay", "category": "Marketplace", "segment": "trading", "icon": "🛍️", "isGlobal": true },
+    { "id": "facebook-marketplace", "name": "Facebook Marketplace", "category": "Marketplace", "segment": "trading", "icon": "📦", "isGlobal": true },
+    { "id": "tesco", "name": "Tesco", "category": "Supermarket", "segment": "general", "icon": "🏬", "isGlobal": false },
+    { "id": "greggs", "name": "Greggs", "category": "Bakery", "segment": "general", "icon": "🥐", "isGlobal": false },
+    { "id": "mcdonalds", "name": "McDonald's", "category": "Fast Food", "segment": "general", "icon": "🍔", "isGlobal": true },
+    { "id": "starbucks", "name": "Starbucks", "category": "Coffee", "segment": "general", "icon": "☕", "isGlobal": true }
+  ]
+}

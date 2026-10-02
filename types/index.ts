@@ -70,6 +70,69 @@ export interface LiveActivityEntry {
   timestamp: string;
 }
 
+/**
+ * "Local Trust Board" — a by-country feature on the homepage. Instead of a
+ * single pasted listing, this scores well-known brands/sites themselves
+ * using automated, rule-based signal checks (no AI/LLM involved, just
+ * fixed formulas over data that would come from real public APIs).
+ */
+export type LocalBrandSignalType =
+  | "googleMyBusiness"
+  | "trustpilot"
+  | "checkIns"
+  | "priceValue"
+  | "afterSales";
+
+export interface LocalBrandSignalResult {
+  type: LocalBrandSignalType;
+  label: string;
+  score: number; // 0-100
+  summary: string;
+  stubbed: true;
+}
+
+/** "trading" = a buy/sell marketplace or classifieds site; "general" = an everyday consumer brand. */
+export type LocalBrandSegment = "trading" | "general";
+
+/** One entry in a country's brand config (see data/local-brands/*.json). */
+export interface LocalBrand {
+  id: string;
+  name: string;
+  category: string;
+  segment: LocalBrandSegment;
+  icon: string;
+  isGlobal: boolean; // international chain/site vs. a country-local business
+}
+
+export interface LocalBrandScore {
+  brand: LocalBrand;
+  score: number; // 0-100 composite
+  tier: TrustTier;
+  tierLabel: string;
+  breakdown: {
+    price: number;
+    trust: number;
+    quality: number;
+    afterSales: number;
+    popularity: number;
+  };
+  signals: LocalBrandSignalResult[];
+}
+
+export interface CountryBrandData {
+  countryCode: string;
+  countryName: string;
+  flag: string;
+  brands: LocalBrand[];
+}
+
+export interface CountryBrandBoard {
+  countryCode: string;
+  countryName: string;
+  flag: string;
+  brands: LocalBrandScore[];
+}
+
 export interface ClaimSubmission {
   id?: string;
   listingUrl: string;

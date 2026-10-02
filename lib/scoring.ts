@@ -63,7 +63,7 @@ const CHECK_WEIGHTS: Record<CheckType, number> = {
  * same listing always gets the same mock result during local development.
  * TODO: replace with real provider calls (see app/api/check/*).
  */
-function seededScore(seed: string, min = 55, max = 99): number {
+export function seededScore(seed: string, min = 55, max = 99): number {
   let hash = 0;
   for (let i = 0; i < seed.length; i++) {
     hash = (hash << 5) - hash + seed.charCodeAt(i);

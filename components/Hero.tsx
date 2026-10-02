@@ -1,9 +1,11 @@
 import Link from "next/link";
+import { CountryBrandBackdrop } from "@/components/CountryBrandBackdrop";
 
 export function Hero() {
   return (
     <section className="relative overflow-hidden bg-hero-gradient">
-      <div className="mx-auto grid max-w-6xl gap-10 px-6 py-20 md:grid-cols-2 md:items-center">
+      <CountryBrandBackdrop />
+      <div className="relative z-10 mx-auto grid max-w-6xl gap-10 px-6 py-20 md:grid-cols-2 md:items-center">
         <div className="animate-fade-in-up">
           <span className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1 text-xs font-semibold text-brand-600 ring-1 ring-brand-100">
             <span className="relative flex h-2 w-2">

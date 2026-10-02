@@ -40,6 +40,7 @@ const config: Config = {
         "fade-in-up": "fade-in-up 0.6s ease-out both",
         "letter-cycle": "letter-cycle 4s ease-in-out both",
         "bubble-float": "bubble-float 4s ease-in-out both",
+        "brand-drift": "brand-drift 6s ease-in-out infinite",
       },
       keyframes: {
         "ticker-scroll": {
@@ -67,6 +68,10 @@ const config: Config = {
           "50%": { transform: "translateY(-10px) scale(1)" },
           "82%": { opacity: "1", transform: "translateY(-18px) scale(1)" },
           "100%": { opacity: "0", transform: "translateY(-36px) scale(0.85)" },
+        },
+        "brand-drift": {
+          "0%, 100%": { transform: "translateY(0) scale(1)", opacity: "0.55" },
+          "50%": { transform: "translateY(-14px) scale(1.05)", opacity: "0.9" },
         },
       },
     },

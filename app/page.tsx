@@ -3,6 +3,8 @@ import { HowItWorks } from "@/components/HowItWorks";
 import { Testimonials } from "@/components/Testimonials";
 import { LiveTicker } from "@/components/LiveTicker";
 import { TrustBadge } from "@/components/TrustBadge";
+import { LocalListingShowcase } from "@/components/LocalListingShowcase";
+import { LocalTrustBoard } from "@/components/LocalTrustBoard";
 
 export default function HomePage() {
   return (
@@ -29,6 +31,8 @@ export default function HomePage() {
       </section>
 
       <HowItWorks />
+      <LocalListingShowcase />
+      <LocalTrustBoard />
       <Testimonials />
     </>
   );
