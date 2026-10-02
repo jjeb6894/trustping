@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { LogoBubble } from "@/components/LogoBubble";
+import { FOUNDED_YEAR, yearsActive } from "@/lib/site-meta";
 
 export function Footer() {
   return (
@@ -9,6 +11,14 @@ export function Footer() {
           <p className="mt-2 text-sm text-slate-500">
             Paste any listing or profile link. Get a Trust Score in seconds.
           </p>
+          <p className="mt-3 text-xs font-medium uppercase tracking-wide text-slate-400">
+            Est. {FOUNDED_YEAR} · {yearsActive()}+ years in operation
+          </p>
+          <div className="mt-4 flex items-center gap-3 text-xs text-slate-500">
+            <LogoBubble name="Stripe" domain="stripe.com" size={16} shape="square" />
+            <LogoBubble name="Cloudflare" domain="cloudflare.com" size={16} shape="square" />
+            <span>Payments &amp; infrastructure partners</span>
+          </div>
         </div>
         <div>
           <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">Product</p>
@@ -27,6 +37,11 @@ export function Footer() {
         </div>
         <div>
           <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">Legal</p>
+          <ul className="mt-3 space-y-2 text-sm text-slate-600">
+            <li><span className="cursor-default">Privacy Policy</span></li>
+            <li><span className="cursor-default">Terms of Service</span></li>
+            <li><span className="cursor-default">Security</span></li>
+          </ul>
           <p className="mt-3 text-sm text-slate-500">
             Insured Verified claims are subject to review. TrustPing is a demo scaffold —
             replace this copy before launch.
@@ -34,7 +49,7 @@ export function Footer() {
         </div>
       </div>
       <div className="border-t border-slate-100 py-4 text-center text-xs text-slate-400">
-        © {new Date().getFullYear()} TrustPing. All rights reserved.
+        © {FOUNDED_YEAR}–{new Date().getFullYear()} TrustPing. All rights reserved.
       </div>
     </footer>
   );

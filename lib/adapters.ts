@@ -46,6 +46,17 @@ export function getAdapterById(id: string): PlatformAdapter | undefined {
   return ADAPTERS.find((adapter) => adapter.id === id);
 }
 
+/** The canonical apex domain used for logo lookups (first non-www entry in `domains`). */
+export function adapterLogoDomain(adapter: PlatformAdapter): string {
+  const bare = adapter.domains.find((d) => !d.startsWith("www."));
+  return (bare ?? adapter.domains[0]).replace(/^www\./, "");
+}
+
+/** Most checks run for any single listing (varies by platform category). */
+export function maxChecksPerListing(): number {
+  return Math.max(...ADAPTERS.map((adapter) => adapter.checks.length));
+}
+
 /** Resolve which platform adapter matches a pasted URL, if any. */
 export function detectPlatform(inputUrl: string): PlatformAdapter | undefined {
   let url: URL;

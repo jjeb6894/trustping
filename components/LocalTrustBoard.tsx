@@ -2,6 +2,8 @@
 
 import { TrustBadge } from "@/components/TrustBadge";
 import { useCountryBrandBoard } from "@/hooks/useCountryBrandBoard";
+import { LogoBubble } from "@/components/LogoBubble";
+import { globalBrandDomain } from "@/lib/global-brand-domains";
 
 const METRICS: { key: "trust" | "price" | "quality" | "afterSales" | "popularity"; label: string }[] = [
   { key: "trust", label: "Trust" },
@@ -55,9 +57,7 @@ export function LocalTrustBoard() {
           >
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-2">
-                <span className="text-2xl" aria-hidden>
-                  {entry.brand.icon}
-                </span>
+                <LogoBubble name={entry.brand.name} domain={globalBrandDomain(entry.brand.name)} size={32} />
                 <div>
                   <p className="font-semibold text-slate-900">{entry.brand.name}</p>
                   <p className="text-xs uppercase tracking-wide text-slate-400">

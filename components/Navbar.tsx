@@ -14,7 +14,9 @@ export function Navbar() {
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <Link href="/" className="flex items-center gap-2 text-lg font-bold text-slate-900">
           <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-500 text-white">
-            🛡️
+            <svg viewBox="0 0 20 20" fill="currentColor" className="h-[18px] w-[18px]" aria-hidden>
+              <path d="M10 1.5 3 4v5.2c0 4.6 3 8.3 7 9.3 4-1 7-4.7 7-9.3V4l-7-2.5Zm-.9 11.8L6 10.2l1.1-1.1 2 1.9 4-4 1.1 1.1-5.1 5.2Z" />
+            </svg>
           </span>
           TrustPing
         </Link>

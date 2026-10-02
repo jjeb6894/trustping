@@ -4,18 +4,21 @@ const TESTIMONIALS = [
       "I almost bought a car with cloned photos from another listing. TrustPing's reverse image check caught it in seconds.",
     name: "Dana R.",
     role: "Buyer, AutoTrader",
+    memberSince: "Member since 2020",
   },
   {
     quote:
       "Getting Insured Verified on my Fiverr gig doubled my inbound inquiries. Buyers trust the badge.",
     name: "Marcus T.",
     role: "Freelancer, Fiverr",
+    memberSince: "Member since 2021",
   },
   {
     quote:
       "We use the Claims flow for every high-value sale now. It's the first marketplace-agnostic guarantee I've seen.",
     name: "Priya K.",
     role: "Reseller, eBay & Gumtree",
+    memberSince: "Member since 2019",
   },
 ];
 
@@ -36,6 +39,7 @@ export function Testimonials() {
               <figcaption className="mt-4 text-sm font-semibold text-slate-900">
                 {t.name}
                 <span className="block text-xs font-normal text-slate-500">{t.role}</span>
+                <span className="block text-xs font-normal text-slate-400">{t.memberSince}</span>
               </figcaption>
             </figure>
           ))}

@@ -2,6 +2,8 @@
 
 import { useMemo } from "react";
 import { useCountryBrandBoard } from "@/hooks/useCountryBrandBoard";
+import { LogoBubble } from "@/components/LogoBubble";
+import { globalBrandDomain } from "@/lib/global-brand-domains";
 
 const POSITIONS = [
   { left: "6%", top: "14%" },
@@ -51,7 +53,7 @@ export function CountryBrandBackdrop() {
               animationDuration: `${5 + (i % 4)}s`,
             }}
           >
-            <span aria-hidden>{entry.brand.icon}</span>
+            <LogoBubble name={entry.brand.name} domain={globalBrandDomain(entry.brand.name)} size={18} />
             {entry.brand.name}
             <span className="text-[10px] font-bold text-emerald-600">{entry.score}</span>
           </span>

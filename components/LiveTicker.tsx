@@ -1,6 +1,7 @@
 import { MOCK_LIVE_ACTIVITY } from "@/lib/mock-data";
-import { getAdapterById } from "@/lib/adapters";
+import { adapterLogoDomain, getAdapterById } from "@/lib/adapters";
 import { TrustBadge } from "./TrustBadge";
+import { LogoBubble } from "./LogoBubble";
 import { tierForScore } from "@/lib/scoring";
 
 /** Animated, auto-scrolling feed of recent (mock) verifications on the home page. */
@@ -20,9 +21,7 @@ export function LiveTicker() {
               className="flex items-center justify-between gap-3 rounded-xl border border-slate-100 bg-white px-4 py-3 shadow-sm"
             >
               <div className="flex items-center gap-3">
-                <span className="text-xl" aria-hidden>
-                  {adapter?.icon ?? "✨"}
-                </span>
+                <LogoBubble name={adapter?.name ?? "?"} domain={adapter ? adapterLogoDomain(adapter) : undefined} size={32} />
                 <div>
                   <p className="text-sm font-medium text-slate-800">
                     <span className="font-semibold">{entry.actor}</span> {entry.action}

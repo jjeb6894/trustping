@@ -2,6 +2,8 @@
 
 import { TrustBadge } from "@/components/TrustBadge";
 import { useCountryBrandBoard } from "@/hooks/useCountryBrandBoard";
+import { LogoBubble } from "@/components/LogoBubble";
+import { globalBrandDomain } from "@/lib/global-brand-domains";
 
 /** Fake-but-plausible listing copy keyed by brand id, just for the mock screenshots below. */
 const SAMPLE_LISTINGS: Record<string, { title: string; price: string; meta: string }> = {
@@ -54,8 +56,8 @@ export function LocalListingShowcase() {
               key={entry.brand.id}
               className="relative overflow-hidden rounded-2xl border border-slate-100 bg-white shadow-sm"
             >
-              <div className="flex h-32 items-center justify-center bg-trust-gradient text-5xl">
-                {entry.brand.icon}
+              <div className="flex h-32 items-center justify-center bg-trust-gradient">
+                <LogoBubble name={entry.brand.name} domain={globalBrandDomain(entry.brand.name)} size={56} />
               </div>
               <div className="absolute right-3 top-3">
                 <TrustBadge tier={entry.tier} label={`${entry.score} · ${entry.tierLabel}`} size="sm" />

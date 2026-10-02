@@ -2,8 +2,15 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useMemo, useState } from "react";
-import { ADAPTERS, CATEGORY_LABELS, CATEGORY_ORDER, groupAdaptersByCategory } from "@/lib/adapters";
+import {
+  ADAPTERS,
+  CATEGORY_LABELS,
+  CATEGORY_ORDER,
+  adapterLogoDomain,
+  groupAdaptersByCategory,
+} from "@/lib/adapters";
 import { BrandLetterCycle } from "@/components/BrandLetterCycle";
+import { LogoBubble } from "@/components/LogoBubble";
 
 function SearchForm() {
   const router = useRouter();
@@ -113,7 +120,7 @@ function SearchForm() {
                         onClick={() => setPlatformFilter(adapter.id)}
                         className="flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-sm text-slate-700 hover:bg-slate-50"
                       >
-                        <span aria-hidden>{adapter.icon}</span>
+                        <LogoBubble name={adapter.name} domain={adapterLogoDomain(adapter)} size={24} />
                         {adapter.name}
                       </button>
                     </li>

@@ -1,6 +1,7 @@
 import { TrustBadge } from "@/components/TrustBadge";
+import { LogoBubble } from "@/components/LogoBubble";
 import { MOCK_LIVE_ACTIVITY } from "@/lib/mock-data";
-import { getAdapterById } from "@/lib/adapters";
+import { adapterLogoDomain, getAdapterById } from "@/lib/adapters";
 
 /**
  * Admin review queue (mock data). TODO: gate behind real admin auth and
@@ -29,7 +30,7 @@ export default function AdminPage() {
                 className="flex items-center justify-between rounded-xl border border-slate-100 bg-white px-4 py-3 shadow-sm"
               >
                 <div className="flex items-center gap-3">
-                  <span className="text-xl" aria-hidden>{adapter?.icon ?? "✨"}</span>
+                  <LogoBubble name={adapter?.name ?? "?"} domain={adapter ? adapterLogoDomain(adapter) : undefined} size={32} />
                   <div>
                     <p className="text-sm font-medium text-slate-800">
                       {entry.actor} · {adapter?.name}
@@ -63,7 +64,7 @@ export default function AdminPage() {
                 className="flex items-center justify-between rounded-xl border border-red-100 bg-red-50/40 px-4 py-3"
               >
                 <div className="flex items-center gap-3">
-                  <span className="text-xl" aria-hidden>{adapter?.icon ?? "✨"}</span>
+                  <LogoBubble name={adapter?.name ?? "?"} domain={adapter ? adapterLogoDomain(adapter) : undefined} size={32} />
                   <div>
                     <p className="text-sm font-medium text-slate-800">
                       {entry.actor} · {adapter?.name}

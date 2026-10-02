@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { CATEGORY_LABELS, CATEGORY_ORDER, groupAdaptersByCategory } from "@/lib/adapters";
+import { CATEGORY_LABELS, CATEGORY_ORDER, adapterLogoDomain, groupAdaptersByCategory } from "@/lib/adapters";
+import { LogoBubble } from "@/components/LogoBubble";
 
 /** Dropdown mega-menu listing every supported platform, grouped by category. */
 export function PlatformMegaMenu() {
@@ -42,7 +43,7 @@ export function PlatformMegaMenu() {
                         href={`/search?platform=${adapter.id}`}
                         className="flex items-center gap-2 text-sm text-slate-600 hover:text-brand-600"
                       >
-                        <span aria-hidden>{adapter.icon}</span>
+                        <LogoBubble name={adapter.name} domain={adapterLogoDomain(adapter)} size={20} />
                         {adapter.name}
                       </Link>
                     </li>
