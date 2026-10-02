@@ -1,0 +1,49 @@
+{
+  "id": "facebook-marketplace",
+  "name": "Facebook Marketplace",
+  "category": "marketplace",
+  "domains": [
+    "facebook.com",
+    "www.facebook.com",
+    "m.facebook.com"
+  ],
+  "urlPatterns": [
+    "facebook\\.com/marketplace/item/"
+  ],
+  "icon": "🏷️",
+  "description": "Peer-to-peer local marketplace listings on Facebook.",
+  "selectors": {
+    "title": {
+      "selector": "[data-testid='marketplace_pdp_title']",
+      "description": "Listing title"
+    },
+    "price": {
+      "selector": "[data-testid='marketplace_pdp_price']",
+      "description": "Asking price"
+    },
+    "sellerName": {
+      "selector": "[data-testid='marketplace_pdp_seller_name']",
+      "description": "Seller profile name"
+    },
+    "images": {
+      "selector": "[data-testid='marketplace_pdp_image'] img",
+      "attribute": "src",
+      "description": "Listing photos"
+    }
+  },
+  "checks": [
+    "reverseImageSearch",
+    "aiImageDetection",
+    "crossPlatformMatch",
+    "accountAgeHistory",
+    "reviewSentiment",
+    "priceAnomalyDetection",
+    "metadataForensics",
+    "duplicateListingScan",
+    "listingConsistencyCheck",
+    "shippingPolicyRiskCheck",
+    "contactInfoVerification",
+    "blacklistDatabaseCheck"
+  ],
+  "notes": "TODO: Facebook requires authenticated sessions for most Marketplace data; consider Meta Graph API alternatives or manual-review fallback."
+}

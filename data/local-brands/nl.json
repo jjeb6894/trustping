@@ -1,0 +1,16 @@
+{
+  "countryCode": "NL",
+  "countryName": "Netherlands",
+  "flag": "🇳🇱",
+  "brands": [
+    { "id": "marktplaats", "name": "Marktplaats", "category": "Classifieds", "segment": "trading", "icon": "🛒", "isGlobal": false },
+    { "id": "bol-com", "name": "Bol.com", "category": "Marketplace", "segment": "trading", "icon": "📦", "isGlobal": false },
+    { "id": "autoscout24", "name": "AutoScout24", "category": "Car Sales", "segment": "trading", "icon": "🚗", "isGlobal": false },
+    { "id": "ebay", "name": "eBay", "category": "Marketplace", "segment": "trading", "icon": "🛍️", "isGlobal": true },
+    { "id": "albert-heijn", "name": "Albert Heijn", "category": "Supermarket", "segment": "general", "icon": "🏬", "isGlobal": false },
+    { "id": "hema", "name": "HEMA", "category": "Retail", "segment": "general", "icon": "🛍️", "isGlobal": false },
+    { "id": "ns", "name": "NS (Dutch Railways)", "category": "Transport", "segment": "general", "icon": "🚆", "isGlobal": false },
+    { "id": "mcdonalds", "name": "McDonald's", "category": "Fast Food", "segment": "general", "icon": "🍔", "isGlobal": true },
+    { "id": "starbucks", "name": "Starbucks", "category": "Coffee", "segment": "general", "icon": "☕", "isGlobal": true }
+  ]
+}

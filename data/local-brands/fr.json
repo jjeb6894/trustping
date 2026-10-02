@@ -1,0 +1,95 @@
+{
+  "countryCode": "FR",
+  "countryName": "France",
+  "flag": "🇫🇷",
+  "brands": [
+    {
+      "id": "leboncoin",
+      "name": "Leboncoin",
+      "category": "Classifieds",
+      "segment": "trading",
+      "icon": "🛒",
+      "isGlobal": false
+    },
+    {
+      "id": "laCentrale",
+      "name": "La Centrale",
+      "category": "Car Sales",
+      "segment": "trading",
+      "icon": "🚗",
+      "isGlobal": false
+    },
+    {
+      "id": "vinted",
+      "name": "Vinted",
+      "category": "Marketplace",
+      "segment": "trading",
+      "icon": "👕",
+      "isGlobal": false
+    },
+    {
+      "id": "ebay",
+      "name": "eBay",
+      "category": "Marketplace",
+      "segment": "trading",
+      "icon": "🛍️",
+      "isGlobal": true
+    },
+    {
+      "id": "amazon",
+      "name": "Amazon",
+      "category": "Marketplace",
+      "segment": "trading",
+      "icon": "📦",
+      "isGlobal": true
+    },
+    {
+      "id": "facebook-marketplace",
+      "name": "Facebook Marketplace",
+      "category": "Marketplace",
+      "segment": "trading",
+      "icon": "🛒",
+      "isGlobal": true
+    },
+    {
+      "id": "carrefour",
+      "name": "Carrefour",
+      "category": "Supermarket",
+      "segment": "general",
+      "icon": "🏬",
+      "isGlobal": false
+    },
+    {
+      "id": "fnac",
+      "name": "Fnac",
+      "category": "Electronics/Retail",
+      "segment": "general",
+      "icon": "📀",
+      "isGlobal": false
+    },
+    {
+      "id": "sncf",
+      "name": "SNCF",
+      "category": "Transport",
+      "segment": "general",
+      "icon": "🚄",
+      "isGlobal": false
+    },
+    {
+      "id": "mcdonalds",
+      "name": "McDonald's",
+      "category": "Fast Food",
+      "segment": "general",
+      "icon": "🍔",
+      "isGlobal": true
+    },
+    {
+      "id": "starbucks",
+      "name": "Starbucks",
+      "category": "Coffee",
+      "segment": "general",
+      "icon": "☕",
+      "isGlobal": true
+    }
+  ]
+}

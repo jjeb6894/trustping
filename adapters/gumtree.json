@@ -1,0 +1,52 @@
+{
+  "id": "gumtree",
+  "name": "Gumtree",
+  "category": "marketplace",
+  "domains": [
+    "gumtree.com",
+    "www.gumtree.com"
+  ],
+  "urlPatterns": [
+    "gumtree\\.com/p/"
+  ],
+  "icon": "🌳",
+  "description": "Local classifieds for goods, services and vehicles.",
+  "selectors": {
+    "title": {
+      "selector": "h1[itemprop='name']",
+      "description": "Ad title"
+    },
+    "price": {
+      "selector": ".ad-price",
+      "description": "Asking price"
+    },
+    "sellerName": {
+      "selector": ".seller-info__name",
+      "description": "Seller display name"
+    },
+    "location": {
+      "selector": ".ad-location",
+      "description": "Listed location"
+    },
+    "images": {
+      "selector": ".gallery img",
+      "attribute": "src",
+      "description": "Ad photos"
+    }
+  },
+  "checks": [
+    "reverseImageSearch",
+    "aiImageDetection",
+    "crossPlatformMatch",
+    "accountAgeHistory",
+    "reviewSentiment",
+    "priceAnomalyDetection",
+    "metadataForensics",
+    "duplicateListingScan",
+    "listingConsistencyCheck",
+    "shippingPolicyRiskCheck",
+    "contactInfoVerification",
+    "blacklistDatabaseCheck"
+  ],
+  "notes": "TODO: Gumtree has no public listing API; selectors must be validated against current markup before production use."
+}

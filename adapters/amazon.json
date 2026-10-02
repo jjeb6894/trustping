@@ -1,0 +1,56 @@
+{
+  "id": "amazon",
+  "name": "Amazon",
+  "category": "marketplace",
+  "domains": [
+    "amazon.com",
+    "www.amazon.com",
+    "amazon.co.uk"
+  ],
+  "urlPatterns": [
+    "amazon\\.[a-z.]+/.*/dp/",
+    "amazon\\.[a-z.]+/gp/product/",
+    "amazon\\.[a-z.]+/sp\\?"
+  ],
+  "icon": "📦",
+  "description": "Product listings and third-party marketplace seller pages.",
+  "selectors": {
+    "title": {
+      "selector": "#productTitle",
+      "description": "Product title"
+    },
+    "price": {
+      "selector": ".a-price .a-offscreen",
+      "description": "Current price"
+    },
+    "sellerName": {
+      "selector": "#sellerProfileTriggerId",
+      "description": "Third-party seller name"
+    },
+    "rating": {
+      "selector": "#acrPopover",
+      "attribute": "title",
+      "description": "Average star rating"
+    },
+    "images": {
+      "selector": "#altImages img",
+      "attribute": "src",
+      "description": "Product images"
+    }
+  },
+  "checks": [
+    "reverseImageSearch",
+    "aiImageDetection",
+    "crossPlatformMatch",
+    "accountAgeHistory",
+    "reviewSentiment",
+    "priceAnomalyDetection",
+    "metadataForensics",
+    "duplicateListingScan",
+    "listingConsistencyCheck",
+    "shippingPolicyRiskCheck",
+    "contactInfoVerification",
+    "blacklistDatabaseCheck"
+  ],
+  "notes": "TODO: Amazon aggressively blocks scraping; prefer the Product Advertising API or SP-API for sellers where available."
+}

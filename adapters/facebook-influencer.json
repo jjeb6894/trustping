@@ -1,0 +1,48 @@
+{
+  "id": "facebook-influencer",
+  "name": "Facebook / Influencer Pages",
+  "category": "social-influencer",
+  "domains": [
+    "facebook.com",
+    "www.facebook.com"
+  ],
+  "urlPatterns": [
+    "facebook\\.com/(?!marketplace/)[a-zA-Z0-9_.]+/?$"
+  ],
+  "icon": "📘",
+  "description": "Public figure, brand, and influencer pages running promotions or sponsored sales.",
+  "selectors": {
+    "pageName": {
+      "selector": "h1",
+      "description": "Page display name"
+    },
+    "likes": {
+      "selector": "[data-testid='page_likes_count']",
+      "description": "Page like/follow count"
+    },
+    "createdDate": {
+      "selector": "[data-testid='page_created']",
+      "description": "Page creation date, when public"
+    },
+    "verifiedBadge": {
+      "selector": "[aria-label='Verified Account']",
+      "description": "Platform verified badge presence"
+    },
+    "avatar": {
+      "selector": "[data-testid='page_profile_photo'] img",
+      "attribute": "src",
+      "description": "Page profile photo"
+    }
+  },
+  "checks": [
+    "reverseImageSearch",
+    "aiImageDetection",
+    "crossPlatformMatch",
+    "accountAgeHistory",
+    "reviewSentiment",
+    "socialProofVerification",
+    "blacklistDatabaseCheck",
+    "contactInfoVerification"
+  ],
+  "notes": "TODO: Facebook Page reviews/recommendations feed reviewSentiment; most fields require the Graph API with page-level permissions."
+}

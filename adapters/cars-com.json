@@ -1,0 +1,50 @@
+{
+  "id": "cars-com",
+  "name": "Cars.com",
+  "category": "car-sales",
+  "domains": [
+    "cars.com",
+    "www.cars.com"
+  ],
+  "urlPatterns": [
+    "cars\\.com/vehicledetail/"
+  ],
+  "icon": "🚙",
+  "description": "Vehicle listings with dealer reviews and price-history data.",
+  "selectors": {
+    "title": {
+      "selector": "h1.listing-title",
+      "description": "Vehicle title"
+    },
+    "price": {
+      "selector": ".primary-price",
+      "description": "Listing price"
+    },
+    "sellerName": {
+      "selector": ".seller-name",
+      "description": "Dealer or private seller name"
+    },
+    "dealerRating": {
+      "selector": ".sds-rating__count",
+      "description": "Dealer review count/rating"
+    },
+    "images": {
+      "selector": ".image-gallery img",
+      "attribute": "src",
+      "description": "Vehicle photos"
+    }
+  },
+  "checks": [
+    "reverseImageSearch",
+    "aiImageDetection",
+    "accountAgeHistory",
+    "reviewSentiment",
+    "priceAnomalyDetection",
+    "metadataForensics",
+    "duplicateListingScan",
+    "listingConsistencyCheck",
+    "domainAgeLookup",
+    "blacklistDatabaseCheck"
+  ],
+  "notes": "TODO: Cars.com dealer reviews map well into reviewSentiment; validate selectors against current DOM before production use."
+}

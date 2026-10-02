@@ -1,0 +1,56 @@
+{
+  "id": "autotrader",
+  "name": "AutoTrader",
+  "category": "car-sales",
+  "domains": [
+    "autotrader.com",
+    "www.autotrader.com",
+    "autotrader.co.uk"
+  ],
+  "urlPatterns": [
+    "autotrader\\.[a-z.]+/.*/details/",
+    "autotrader\\.[a-z.]+/car-details/"
+  ],
+  "icon": "🚗",
+  "description": "New and used vehicle listings from dealers and private sellers.",
+  "selectors": {
+    "title": {
+      "selector": "h1.listing-title",
+      "description": "Vehicle title (year/make/model)"
+    },
+    "price": {
+      "selector": ".first-price",
+      "description": "Listing price"
+    },
+    "sellerName": {
+      "selector": ".dealer-name",
+      "description": "Dealer or seller name"
+    },
+    "vin": {
+      "selector": "[data-cmp='vin']",
+      "description": "Vehicle identification number"
+    },
+    "mileage": {
+      "selector": "[data-cmp='mileage']",
+      "description": "Odometer reading"
+    },
+    "images": {
+      "selector": ".image-gallery img",
+      "attribute": "src",
+      "description": "Vehicle photos"
+    }
+  },
+  "checks": [
+    "reverseImageSearch",
+    "aiImageDetection",
+    "accountAgeHistory",
+    "reviewSentiment",
+    "priceAnomalyDetection",
+    "metadataForensics",
+    "duplicateListingScan",
+    "listingConsistencyCheck",
+    "domainAgeLookup",
+    "blacklistDatabaseCheck"
+  ],
+  "notes": "TODO: VIN lookup (e.g. NHTSA vPIC / Carfax-style history) should feed into accountAgeHistory for vehicles once a VIN-report API key is available."
+}

@@ -1,0 +1,52 @@
+{
+  "id": "fiverr",
+  "name": "Fiverr",
+  "category": "professional",
+  "domains": [
+    "fiverr.com",
+    "www.fiverr.com"
+  ],
+  "urlPatterns": [
+    "fiverr\\.com/[a-zA-Z0-9_]+$",
+    "fiverr\\.com/.*/.+"
+  ],
+  "icon": "🧑‍💻",
+  "description": "Freelance gig listings and seller profiles.",
+  "selectors": {
+    "title": {
+      "selector": "h1.gig-title",
+      "description": "Gig title"
+    },
+    "sellerName": {
+      "selector": ".seller-card .username",
+      "description": "Freelancer username"
+    },
+    "rating": {
+      "selector": ".rating-score",
+      "description": "Average gig rating"
+    },
+    "reviewCount": {
+      "selector": ".rating-count-number",
+      "description": "Number of reviews"
+    },
+    "joinedDate": {
+      "selector": ".member-since",
+      "description": "Account creation date"
+    },
+    "images": {
+      "selector": ".gig-gallery img",
+      "attribute": "src",
+      "description": "Gig portfolio images"
+    }
+  },
+  "checks": [
+    "crossPlatformMatch",
+    "accountAgeHistory",
+    "reviewSentiment",
+    "socialProofVerification",
+    "contactInfoVerification",
+    "blacklistDatabaseCheck",
+    "domainAgeLookup"
+  ],
+  "notes": "TODO: Fiverr's public gig pages expose joinedDate/reviews directly, which is ideal for accountAgeHistory + reviewSentiment."
+}

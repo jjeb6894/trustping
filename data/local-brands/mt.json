@@ -1,0 +1,17 @@
+{
+  "countryCode": "MT",
+  "countryName": "Malta",
+  "flag": "🇲🇹",
+  "brands": [
+    { "id": "maltapark", "name": "MaltaPark", "category": "Classifieds", "segment": "trading", "icon": "🛒", "isGlobal": false },
+    { "id": "autotrade-malta", "name": "AutoTrade Malta", "category": "Car Sales", "segment": "trading", "icon": "🚗", "isGlobal": false },
+    { "id": "ebay", "name": "eBay", "category": "Marketplace", "segment": "trading", "icon": "🛍️", "isGlobal": true },
+    { "id": "facebook-marketplace", "name": "Facebook Marketplace", "category": "Marketplace", "segment": "trading", "icon": "📦", "isGlobal": true },
+    { "id": "pama", "name": "PAMA Shopping Village", "category": "Retail", "segment": "general", "icon": "🏬", "isGlobal": false },
+    { "id": "big-mart-malta", "name": "Big Mart Supermarkets", "category": "Retail", "segment": "general", "icon": "🛒", "isGlobal": false },
+    { "id": "solar-solutions-malta", "name": "Solar Solutions Malta", "category": "Home Services", "segment": "general", "icon": "☀️", "isGlobal": false },
+    { "id": "go-plc", "name": "GO plc", "category": "Telecom", "segment": "general", "icon": "📶", "isGlobal": false },
+    { "id": "mcdonalds", "name": "McDonald's", "category": "Fast Food", "segment": "general", "icon": "🍔", "isGlobal": true },
+    { "id": "starbucks", "name": "Starbucks", "category": "Coffee", "segment": "general", "icon": "☕", "isGlobal": true }
+  ]
+}

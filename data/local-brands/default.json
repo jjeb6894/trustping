@@ -1,0 +1,12 @@
+{
+  "countryCode": "XX",
+  "countryName": "Your region",
+  "flag": "🌍",
+  "brands": [
+    { "id": "ebay", "name": "eBay", "category": "Marketplace", "segment": "trading", "icon": "🛍️", "isGlobal": true },
+    { "id": "amazon", "name": "Amazon", "category": "Marketplace", "segment": "trading", "icon": "📦", "isGlobal": true },
+    { "id": "facebook-marketplace", "name": "Facebook Marketplace", "category": "Marketplace", "segment": "trading", "icon": "🛒", "isGlobal": true },
+    { "id": "mcdonalds", "name": "McDonald's", "category": "Fast Food", "segment": "general", "icon": "🍔", "isGlobal": true },
+    { "id": "starbucks", "name": "Starbucks", "category": "Coffee", "segment": "general", "icon": "☕", "isGlobal": true }
+  ]
+}
