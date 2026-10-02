@@ -13,7 +13,17 @@ export type CheckType =
   | "aiImageDetection"
   | "crossPlatformMatch"
   | "accountAgeHistory"
-  | "reviewSentiment";
+  | "reviewSentiment"
+  | "priceAnomalyDetection"
+  | "metadataForensics"
+  | "domainAgeLookup"
+  | "duplicateListingScan"
+  | "contactInfoVerification"
+  | "blacklistDatabaseCheck"
+  | "socialProofVerification"
+  | "paymentRiskCheck"
+  | "listingConsistencyCheck"
+  | "shippingPolicyRiskCheck";
 
 /** One row in an adapter's `selectors` map: a CSS selector + what it extracts. */
 export interface AdapterSelector {

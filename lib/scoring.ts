@@ -48,6 +48,16 @@ const CHECK_LABELS: Record<CheckType, string> = {
   crossPlatformMatch: "Cross-Platform Identity Match",
   accountAgeHistory: "Account Age & History",
   reviewSentiment: "Review Sentiment Analysis",
+  priceAnomalyDetection: "Price Anomaly Detection",
+  metadataForensics: "Photo Metadata Forensics",
+  domainAgeLookup: "Domain Age & WHOIS Lookup",
+  duplicateListingScan: "Duplicate Listing Scan",
+  contactInfoVerification: "Contact Info Verification",
+  blacklistDatabaseCheck: "Scammer Blacklist Database Check",
+  socialProofVerification: "Social Proof & Follower Authenticity",
+  paymentRiskCheck: "Payment Method Risk Check",
+  listingConsistencyCheck: "Listing Consistency Check",
+  shippingPolicyRiskCheck: "Shipping & Refund Policy Risk Check",
 };
 
 const CHECK_WEIGHTS: Record<CheckType, number> = {
@@ -56,6 +66,16 @@ const CHECK_WEIGHTS: Record<CheckType, number> = {
   crossPlatformMatch: 0.8,
   accountAgeHistory: 1.2,
   reviewSentiment: 1,
+  priceAnomalyDetection: 0.9,
+  metadataForensics: 0.7,
+  domainAgeLookup: 0.6,
+  duplicateListingScan: 0.9,
+  contactInfoVerification: 0.7,
+  blacklistDatabaseCheck: 1.3,
+  socialProofVerification: 0.8,
+  paymentRiskCheck: 1.1,
+  listingConsistencyCheck: 0.8,
+  shippingPolicyRiskCheck: 0.6,
 };
 
 /**
@@ -114,6 +134,46 @@ function stubSummary(type: CheckType, score: number): string {
       return score > 80
         ? "Overwhelmingly positive review sentiment."
         : "Mixed or sparse review sentiment detected.";
+    case "priceAnomalyDetection":
+      return score > 80
+        ? "Price is consistent with similar listings in this category."
+        : "Price is significantly below market average — common scam pattern.";
+    case "metadataForensics":
+      return score > 80
+        ? "Photo metadata (EXIF) is consistent with an original, recent capture."
+        : "Photo metadata is missing, stripped, or inconsistent with the listing claims.";
+    case "domainAgeLookup":
+      return score > 80
+        ? "Associated domain/profile has an established registration history."
+        : "Associated domain or profile was registered very recently.";
+    case "duplicateListingScan":
+      return score > 80
+        ? "No identical listings found posted elsewhere under different sellers."
+        : "The same listing text/photos appear under multiple seller names.";
+    case "contactInfoVerification":
+      return score > 80
+        ? "Listed contact details are well-formed and reachable."
+        : "Contact details are missing, malformed, or unreachable.";
+    case "blacklistDatabaseCheck":
+      return score > 80
+        ? "No matches found in known scammer/fraud databases."
+        : "Partial match found against reported scam or fraud reports.";
+    case "socialProofVerification":
+      return score > 80
+        ? "Follower/engagement ratio looks organic and consistent."
+        : "Follower count and engagement ratio suggest possible fake followers.";
+    case "paymentRiskCheck":
+      return score > 80
+        ? "Only standard buyer-protected payment methods are requested."
+        : "High-risk payment methods requested (wire transfer, gift cards, crypto).";
+    case "listingConsistencyCheck":
+      return score > 80
+        ? "Title, description, and photos are consistent with each other."
+        : "Mismatch detected between the listing's title, description, and photos.";
+    case "shippingPolicyRiskCheck":
+      return score > 80
+        ? "Standard shipping/refund policy with no major red flags."
+        : "No-return / cash-only / no-refund policy detected — elevated risk.";
     default:
       return "Check complete.";
   }

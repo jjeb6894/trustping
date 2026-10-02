@@ -2,17 +2,53 @@
   "id": "ebay",
   "name": "eBay",
   "category": "marketplace",
-  "domains": ["ebay.com", "www.ebay.com", "ebay.co.uk"],
-  "urlPatterns": ["ebay\\.[a-z.]+/itm/", "ebay\\.[a-z.]+/usr/"],
+  "domains": [
+    "ebay.com",
+    "www.ebay.com",
+    "ebay.co.uk"
+  ],
+  "urlPatterns": [
+    "ebay\\.[a-z.]+/itm/",
+    "ebay\\.[a-z.]+/usr/"
+  ],
   "icon": "🛒",
   "description": "Auction and fixed-price listings, plus seller profiles.",
   "selectors": {
-    "title": { "selector": "h1.x-item-title__mainTitle", "description": "Listing title" },
-    "price": { "selector": ".x-price-primary span", "description": "Current price" },
-    "sellerName": { "selector": ".x-sellercard-atf__info__about-seller a", "description": "Seller display name" },
-    "sellerFeedback": { "selector": ".x-sellercard-atf__data-item", "description": "Feedback score / percentage" },
-    "images": { "selector": ".ux-image-carousel-item img", "attribute": "src", "description": "Listing photos" }
+    "title": {
+      "selector": "h1.x-item-title__mainTitle",
+      "description": "Listing title"
+    },
+    "price": {
+      "selector": ".x-price-primary span",
+      "description": "Current price"
+    },
+    "sellerName": {
+      "selector": ".x-sellercard-atf__info__about-seller a",
+      "description": "Seller display name"
+    },
+    "sellerFeedback": {
+      "selector": ".x-sellercard-atf__data-item",
+      "description": "Feedback score / percentage"
+    },
+    "images": {
+      "selector": ".ux-image-carousel-item img",
+      "attribute": "src",
+      "description": "Listing photos"
+    }
   },
-  "checks": ["reverseImageSearch", "aiImageDetection", "accountAgeHistory", "reviewSentiment"],
+  "checks": [
+    "reverseImageSearch",
+    "aiImageDetection",
+    "crossPlatformMatch",
+    "accountAgeHistory",
+    "reviewSentiment",
+    "priceAnomalyDetection",
+    "metadataForensics",
+    "duplicateListingScan",
+    "listingConsistencyCheck",
+    "shippingPolicyRiskCheck",
+    "contactInfoVerification",
+    "blacklistDatabaseCheck"
+  ],
   "notes": "TODO: replace selectors with verified values once a real scraper/HTML fetch is wired up; eBay also offers an official Browse API that should be preferred over scraping."
 }

@@ -86,7 +86,7 @@ changes are needed to add a new platform**. An adapter looks like:
   "selectors": {
     "title": { "selector": "h1.x-item-title__mainTitle", "description": "Listing title" }
   },
-  "checks": ["reverseImageSearch", "aiImageDetection", "accountAgeHistory", "reviewSentiment"]
+  "checks": ["reverseImageSearch", "aiImageDetection", "accountAgeHistory", "reviewSentiment", "priceAnomalyDetection"]
 }
 ```
 
@@ -96,7 +96,8 @@ changes are needed to add a new platform**. An adapter looks like:
   the grouped mega-menu.
 - `selectors` — CSS selectors (+ optional `attribute`) describing what to extract once a real
   scraper/fetcher is wired up.
-- `checks` — which of the 5 pipeline checks apply to this platform.
+- `checks` — which of the **15** pipeline checks apply to this platform (each adapter only
+  enables the checks that make sense for its category — see table below).
 
 ### Adding a new platform
 
@@ -133,17 +134,31 @@ npm run typecheck   # tsc --noEmit
 npm run build       # production build (also what Cloudflare Pages runs)
 ```
 
-## Wiring up real integrations (TODOs)
+## The 15 Trust Check pipeline checks
 
-Every stub is marked with `// TODO:` and points at a suggested real provider:
+Every check is a stand-in (`stubbed: true`) for a real integration — each route has a
+`// TODO:` comment pointing at a suggested real provider. An adapter's `checks` array
+controls which of these run for that platform (e.g. a LinkedIn profile doesn't need a
+shipping-policy check; an eBay listing doesn't need follower-authenticity analysis).
 
-- **Reverse image search** — `app/api/check/reverse-image/route.ts` (Google Vision Web
-  Detection, TinEye)
-- **AI image detection** — `app/api/check/ai-image/route.ts` (Hive Moderation, Sightengine)
-- **Cross-platform identity match** — `app/api/check/cross-platform/route.ts`
-- **Account age/history** — `app/api/check/account-history/route.ts` (incl. VIN history for
-  vehicle adapters)
-- **Review sentiment** — `app/api/check/review-sentiment/route.ts`
+| Check | Route | Suggested real provider |
+|---|---|---|
+| Reverse Image Search | `app/api/check/reverse-image` | Google Vision Web Detection, TinEye |
+| AI-Generated Image Detection | `app/api/check/ai-image` | Hive Moderation, Sightengine |
+| Cross-Platform Identity Match | `app/api/check/cross-platform` | Custom identity-graph matching |
+| Account Age & History | `app/api/check/account-history` | Platform APIs, VIN history (vehicles) |
+| Review Sentiment Analysis | `app/api/check/review-sentiment` | NLP sentiment over scraped reviews |
+| Price Anomaly Detection | `app/api/check/price-anomaly` | Keepa, eBay sold-items median |
+| Photo Metadata Forensics | `app/api/check/metadata-forensics` | exifr / exiftool EXIF parsing |
+| Domain Age & WHOIS Lookup | `app/api/check/domain-age` | WhoisXML API, rdap.org |
+| Duplicate Listing Scan | `app/api/check/duplicate-listing` | Fuzzy text + image-hash index |
+| Contact Info Verification | `app/api/check/contact-verification` | Twilio Lookup, NeverBounce/ZeroBounce |
+| Scammer Blacklist Database Check | `app/api/check/blacklist-check` | BBB Scam Tracker, internal claims history |
+| Social Proof & Follower Authenticity | `app/api/check/social-proof` | Instagram Graph API, TikTok Research API |
+| Payment Method Risk Check | `app/api/check/payment-risk` | Keyword scan for wire/gift-card/crypto requests |
+| Listing Consistency Check | `app/api/check/listing-consistency` | Vision model vs. title/category match |
+| Shipping & Refund Policy Risk Check | `app/api/check/shipping-policy` | Keyword scan for no-return/cash-only language |
+
 - **Stripe** — set real keys via `.env.local` (dev) or `wrangler secret put` (prod); replace
   placeholder `priceId`s in `app/api/stripe/checkout/route.ts` with real Stripe Price IDs.
 - **D1 persistence** — `app/api/check/route.ts` and `app/api/claims/route.ts` have TODOs for

@@ -2,17 +2,47 @@
   "id": "instagram",
   "name": "Instagram",
   "category": "social-influencer",
-  "domains": ["instagram.com", "www.instagram.com"],
-  "urlPatterns": ["instagram\\.com/[a-zA-Z0-9_.]+/?$"],
+  "domains": [
+    "instagram.com",
+    "www.instagram.com"
+  ],
+  "urlPatterns": [
+    "instagram\\.com/[a-zA-Z0-9_.]+/?$"
+  ],
   "icon": "📸",
   "description": "Influencer and creator profiles promoting products or paid shoutouts.",
   "selectors": {
-    "username": { "selector": "header h2", "description": "Account username" },
-    "followerCount": { "selector": "header li:nth-child(2) span", "description": "Follower count" },
-    "bio": { "selector": ".-vDIg span", "description": "Profile bio text" },
-    "verifiedBadge": { "selector": "header svg[aria-label='Verified']", "description": "Platform verified badge presence" },
-    "avatar": { "selector": "header img", "attribute": "src", "description": "Profile photo" }
+    "username": {
+      "selector": "header h2",
+      "description": "Account username"
+    },
+    "followerCount": {
+      "selector": "header li:nth-child(2) span",
+      "description": "Follower count"
+    },
+    "bio": {
+      "selector": ".-vDIg span",
+      "description": "Profile bio text"
+    },
+    "verifiedBadge": {
+      "selector": "header svg[aria-label='Verified']",
+      "description": "Platform verified badge presence"
+    },
+    "avatar": {
+      "selector": "header img",
+      "attribute": "src",
+      "description": "Profile photo"
+    }
   },
-  "checks": ["reverseImageSearch", "aiImageDetection", "crossPlatformMatch", "accountAgeHistory"],
+  "checks": [
+    "reverseImageSearch",
+    "aiImageDetection",
+    "crossPlatformMatch",
+    "accountAgeHistory",
+    "reviewSentiment",
+    "socialProofVerification",
+    "blacklistDatabaseCheck",
+    "contactInfoVerification"
+  ],
   "notes": "TODO: Instagram requires login for most profile data; integrate the Instagram Graph API for creator accounts where authorized."
 }

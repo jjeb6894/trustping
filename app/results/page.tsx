@@ -96,7 +96,9 @@ function ResultsContent() {
         )}
 
         <div className="mt-6 space-y-4">
-          <h2 className="text-lg font-semibold text-slate-900">Check breakdown</h2>
+          <h2 className="text-lg font-semibold text-slate-900">
+            Check breakdown <span className="font-normal text-slate-500">({result.checks.length} checks run)</span>
+          </h2>
           {result.checks.map((check) => (
             <div
               key={check.type}
