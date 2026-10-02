@@ -1,11 +1,14 @@
 import Link from "next/link";
-import { LogoBubble } from "@/components/LogoBubble";
+import { TrustedByStrip } from "@/components/TrustedByStrip";
 import { FOUNDED_YEAR, yearsActive } from "@/lib/site-meta";
 
 export function Footer() {
   return (
     <footer className="border-t border-slate-100 bg-slate-50">
-      <div className="mx-auto grid max-w-6xl gap-8 px-6 py-12 md:grid-cols-4">
+      <div className="mx-auto max-w-6xl px-6 pt-10">
+        <TrustedByStrip dense logoSize={18} />
+      </div>
+      <div className="mx-auto grid max-w-6xl gap-8 px-6 py-10 md:grid-cols-4">
         <div>
           <p className="text-lg font-bold text-slate-900">TrustPing</p>
           <p className="mt-2 text-sm text-slate-500">
@@ -14,11 +17,6 @@ export function Footer() {
           <p className="mt-3 text-xs font-medium uppercase tracking-wide text-slate-400">
             Est. {FOUNDED_YEAR} · {yearsActive()}+ years in operation
           </p>
-          <div className="mt-4 flex items-center gap-3 text-xs text-slate-500">
-            <LogoBubble name="Stripe" domain="stripe.com" size={16} shape="square" />
-            <LogoBubble name="Cloudflare" domain="cloudflare.com" size={16} shape="square" />
-            <span>Payments &amp; infrastructure partners</span>
-          </div>
         </div>
         <div>
           <p className="text-xs font-semibold uppercase tracking-wide text-slate-400">Product</p>

@@ -42,7 +42,7 @@ export const TIER_STYLES: Record<
   },
 };
 
-const CHECK_LABELS: Record<CheckType, string> = {
+export const CHECK_LABELS: Record<CheckType, string> = {
   reverseImageSearch: "Reverse Image Search",
   aiImageDetection: "AI-Generated Image Detection",
   crossPlatformMatch: "Cross-Platform Identity Match",
@@ -178,6 +178,9 @@ function stubSummary(type: CheckType, score: number): string {
       return "Check complete.";
   }
 }
+
+/** A check "passes" (gets a tick mark) once it clears this score threshold. */
+export const CHECK_PASS_THRESHOLD = 70;
 
 export function aggregateScore(checks: CheckResult[]): number {
   if (checks.length === 0) return 0;

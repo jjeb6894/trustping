@@ -143,6 +143,37 @@ export interface CountryBrandBoard {
   brands: LocalBrandScore[];
 }
 
+/** What a user is claiming/listing: their own profile, a company, or a one-off listing. */
+export type ListingKind = "profile" | "company" | "listing";
+
+export const LISTING_KIND_LABELS: Record<ListingKind, string> = {
+  profile: "My Profile",
+  company: "My Company",
+  listing: "This Listing",
+};
+
+/** Submitted after a Trust Check result, to publish a shareable public page. */
+export interface DirectoryEntrySubmission {
+  url: string;
+  kind: ListingKind;
+  displayName: string;
+  contactEmail: string;
+}
+
+/** Everything needed to render the public /l/[slug] page, with no server storage. */
+export interface DirectoryEntryPayload {
+  kind: ListingKind;
+  displayName: string;
+  url: string;
+  platformName: string;
+  score: number;
+  tier: TrustTier;
+  tierLabel: string;
+  checksPassed: number;
+  checksTotal: number;
+  createdAt: string;
+}
+
 export interface ClaimSubmission {
   id?: string;
   listingUrl: string;

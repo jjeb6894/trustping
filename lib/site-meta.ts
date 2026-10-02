@@ -13,3 +13,12 @@ export function yearsActive(now: Date = new Date()): number {
 }
 
 export const LISTINGS_CHECKED_LABEL = "2.4M+";
+
+/**
+ * Headline conversion-lift stats shown alongside the Trusted-by strip.
+ * TODO: replace with a real, citation-backed internal study once enough
+ * Insured Verified transactions have closed to measure this directly.
+ */
+export const VERIFIED_SELLS_MORE_PERCENT = 37; // "Verified listings sell 37% more often"
+export const VERIFIED_VALUE_ADDED_PERCENT = 19; // "+19% average value added"
+
