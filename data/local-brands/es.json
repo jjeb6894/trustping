@@ -1,0 +1,95 @@
+{
+  "countryCode": "ES",
+  "countryName": "Spain",
+  "flag": "🇪🇸",
+  "brands": [
+    {
+      "id": "milanuncios",
+      "name": "Milanuncios",
+      "category": "Classifieds",
+      "segment": "trading",
+      "icon": "🛒",
+      "isGlobal": false
+    },
+    {
+      "id": "coches-net",
+      "name": "Coches.net",
+      "category": "Car Sales",
+      "segment": "trading",
+      "icon": "🚗",
+      "isGlobal": false
+    },
+    {
+      "id": "wallapop",
+      "name": "Wallapop",
+      "category": "Marketplace",
+      "segment": "trading",
+      "icon": "📱",
+      "isGlobal": false
+    },
+    {
+      "id": "ebay",
+      "name": "eBay",
+      "category": "Marketplace",
+      "segment": "trading",
+      "icon": "🛍️",
+      "isGlobal": true
+    },
+    {
+      "id": "amazon",
+      "name": "Amazon",
+      "category": "Marketplace",
+      "segment": "trading",
+      "icon": "📦",
+      "isGlobal": true
+    },
+    {
+      "id": "facebook-marketplace",
+      "name": "Facebook Marketplace",
+      "category": "Marketplace",
+      "segment": "trading",
+      "icon": "🛒",
+      "isGlobal": true
+    },
+    {
+      "id": "mercadona",
+      "name": "Mercadona",
+      "category": "Supermarket",
+      "segment": "general",
+      "icon": "🏬",
+      "isGlobal": false
+    },
+    {
+      "id": "el-corte-ingles",
+      "name": "El Corte Inglés",
+      "category": "Retail",
+      "segment": "general",
+      "icon": "🏢",
+      "isGlobal": false
+    },
+    {
+      "id": "movistar",
+      "name": "Movistar",
+      "category": "Telecom",
+      "segment": "general",
+      "icon": "📶",
+      "isGlobal": false
+    },
+    {
+      "id": "mcdonalds",
+      "name": "McDonald's",
+      "category": "Fast Food",
+      "segment": "general",
+      "icon": "🍔",
+      "isGlobal": true
+    },
+    {
+      "id": "starbucks",
+      "name": "Starbucks",
+      "category": "Coffee",
+      "segment": "general",
+      "icon": "☕",
+      "isGlobal": true
+    }
+  ]
+}

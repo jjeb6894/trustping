@@ -1,0 +1,95 @@
+{
+  "countryCode": "CH",
+  "countryName": "Switzerland",
+  "flag": "🇨🇭",
+  "brands": [
+    {
+      "id": "anibis",
+      "name": "Anibis",
+      "category": "Classifieds",
+      "segment": "trading",
+      "icon": "🛒",
+      "isGlobal": false
+    },
+    {
+      "id": "autoscout24-ch",
+      "name": "AutoScout24",
+      "category": "Car Sales",
+      "segment": "trading",
+      "icon": "🚗",
+      "isGlobal": false
+    },
+    {
+      "id": "ricardo",
+      "name": "Ricardo.ch",
+      "category": "Marketplace",
+      "segment": "trading",
+      "icon": "📦",
+      "isGlobal": false
+    },
+    {
+      "id": "ebay",
+      "name": "eBay",
+      "category": "Marketplace",
+      "segment": "trading",
+      "icon": "🛍️",
+      "isGlobal": true
+    },
+    {
+      "id": "amazon",
+      "name": "Amazon",
+      "category": "Marketplace",
+      "segment": "trading",
+      "icon": "📦",
+      "isGlobal": true
+    },
+    {
+      "id": "facebook-marketplace",
+      "name": "Facebook Marketplace",
+      "category": "Marketplace",
+      "segment": "trading",
+      "icon": "🛒",
+      "isGlobal": true
+    },
+    {
+      "id": "migros",
+      "name": "Migros",
+      "category": "Supermarket",
+      "segment": "general",
+      "icon": "🏬",
+      "isGlobal": false
+    },
+    {
+      "id": "coop-ch",
+      "name": "Coop",
+      "category": "Supermarket",
+      "segment": "general",
+      "icon": "🛒",
+      "isGlobal": false
+    },
+    {
+      "id": "swisscom",
+      "name": "Swisscom",
+      "category": "Telecom",
+      "segment": "general",
+      "icon": "📶",
+      "isGlobal": false
+    },
+    {
+      "id": "mcdonalds",
+      "name": "McDonald's",
+      "category": "Fast Food",
+      "segment": "general",
+      "icon": "🍔",
+      "isGlobal": true
+    },
+    {
+      "id": "starbucks",
+      "name": "Starbucks",
+      "category": "Coffee",
+      "segment": "general",
+      "icon": "☕",
+      "isGlobal": true
+    }
+  ]
+}

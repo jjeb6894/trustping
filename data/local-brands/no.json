@@ -1,0 +1,95 @@
+{
+  "countryCode": "NO",
+  "countryName": "Norway",
+  "flag": "🇳🇴",
+  "brands": [
+    {
+      "id": "finn-no",
+      "name": "FINN.no",
+      "category": "Classifieds",
+      "segment": "trading",
+      "icon": "🛒",
+      "isGlobal": false
+    },
+    {
+      "id": "finn-bil",
+      "name": "FINN Bil",
+      "category": "Car Sales",
+      "segment": "trading",
+      "icon": "🚗",
+      "isGlobal": false
+    },
+    {
+      "id": "facebook-marketplace-no",
+      "name": "Facebook Marketplace",
+      "category": "Marketplace",
+      "segment": "trading",
+      "icon": "📦",
+      "isGlobal": true
+    },
+    {
+      "id": "ebay",
+      "name": "eBay",
+      "category": "Marketplace",
+      "segment": "trading",
+      "icon": "🛍️",
+      "isGlobal": true
+    },
+    {
+      "id": "amazon",
+      "name": "Amazon",
+      "category": "Marketplace",
+      "segment": "trading",
+      "icon": "📦",
+      "isGlobal": true
+    },
+    {
+      "id": "facebook-marketplace",
+      "name": "Facebook Marketplace",
+      "category": "Marketplace",
+      "segment": "trading",
+      "icon": "🛒",
+      "isGlobal": true
+    },
+    {
+      "id": "kiwi",
+      "name": "Kiwi",
+      "category": "Supermarket",
+      "segment": "general",
+      "icon": "🏬",
+      "isGlobal": false
+    },
+    {
+      "id": "rema-1000",
+      "name": "REMA 1000",
+      "category": "Supermarket",
+      "segment": "general",
+      "icon": "🛒",
+      "isGlobal": false
+    },
+    {
+      "id": "telenor",
+      "name": "Telenor",
+      "category": "Telecom",
+      "segment": "general",
+      "icon": "📶",
+      "isGlobal": false
+    },
+    {
+      "id": "mcdonalds",
+      "name": "McDonald's",
+      "category": "Fast Food",
+      "segment": "general",
+      "icon": "🍔",
+      "isGlobal": true
+    },
+    {
+      "id": "starbucks",
+      "name": "Starbucks",
+      "category": "Coffee",
+      "segment": "general",
+      "icon": "☕",
+      "isGlobal": true
+    }
+  ]
+}

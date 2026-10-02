@@ -1,0 +1,95 @@
+{
+  "countryCode": "GR",
+  "countryName": "Greece",
+  "flag": "🇬🇷",
+  "brands": [
+    {
+      "id": "car-gr",
+      "name": "Car.gr",
+      "category": "Car Sales",
+      "segment": "trading",
+      "icon": "🚗",
+      "isGlobal": false
+    },
+    {
+      "id": "xe-gr",
+      "name": "XE.gr",
+      "category": "Classifieds",
+      "segment": "trading",
+      "icon": "🛒",
+      "isGlobal": false
+    },
+    {
+      "id": "skroutz",
+      "name": "Skroutz",
+      "category": "Marketplace",
+      "segment": "trading",
+      "icon": "📦",
+      "isGlobal": false
+    },
+    {
+      "id": "ebay",
+      "name": "eBay",
+      "category": "Marketplace",
+      "segment": "trading",
+      "icon": "🛍️",
+      "isGlobal": true
+    },
+    {
+      "id": "amazon",
+      "name": "Amazon",
+      "category": "Marketplace",
+      "segment": "trading",
+      "icon": "📦",
+      "isGlobal": true
+    },
+    {
+      "id": "facebook-marketplace",
+      "name": "Facebook Marketplace",
+      "category": "Marketplace",
+      "segment": "trading",
+      "icon": "🛒",
+      "isGlobal": true
+    },
+    {
+      "id": "ab-vasilopoulos",
+      "name": "AB Vasilopoulos",
+      "category": "Supermarket",
+      "segment": "general",
+      "icon": "🏬",
+      "isGlobal": false
+    },
+    {
+      "id": "cosmote",
+      "name": "Cosmote",
+      "category": "Telecom",
+      "segment": "general",
+      "icon": "📶",
+      "isGlobal": false
+    },
+    {
+      "id": "ote",
+      "name": "OTE",
+      "category": "Telecom",
+      "segment": "general",
+      "icon": "📡",
+      "isGlobal": false
+    },
+    {
+      "id": "mcdonalds",
+      "name": "McDonald's",
+      "category": "Fast Food",
+      "segment": "general",
+      "icon": "🍔",
+      "isGlobal": true
+    },
+    {
+      "id": "starbucks",
+      "name": "Starbucks",
+      "category": "Coffee",
+      "segment": "general",
+      "icon": "☕",
+      "isGlobal": true
+    }
+  ]
+}

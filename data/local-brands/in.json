@@ -1,0 +1,95 @@
+{
+  "countryCode": "IN",
+  "countryName": "India",
+  "flag": "🇮🇳",
+  "brands": [
+    {
+      "id": "olx-in",
+      "name": "OLX India",
+      "category": "Classifieds",
+      "segment": "trading",
+      "icon": "🛒",
+      "isGlobal": false
+    },
+    {
+      "id": "cardekho",
+      "name": "CarDekho",
+      "category": "Car Sales",
+      "segment": "trading",
+      "icon": "🚗",
+      "isGlobal": false
+    },
+    {
+      "id": "quikr",
+      "name": "Quikr",
+      "category": "Classifieds",
+      "segment": "trading",
+      "icon": "📦",
+      "isGlobal": false
+    },
+    {
+      "id": "ebay",
+      "name": "eBay",
+      "category": "Marketplace",
+      "segment": "trading",
+      "icon": "🛍️",
+      "isGlobal": true
+    },
+    {
+      "id": "amazon",
+      "name": "Amazon",
+      "category": "Marketplace",
+      "segment": "trading",
+      "icon": "📦",
+      "isGlobal": true
+    },
+    {
+      "id": "facebook-marketplace",
+      "name": "Facebook Marketplace",
+      "category": "Marketplace",
+      "segment": "trading",
+      "icon": "🛒",
+      "isGlobal": true
+    },
+    {
+      "id": "reliance-fresh",
+      "name": "Reliance Fresh",
+      "category": "Supermarket",
+      "segment": "general",
+      "icon": "🏬",
+      "isGlobal": false
+    },
+    {
+      "id": "jio",
+      "name": "Jio",
+      "category": "Telecom",
+      "segment": "general",
+      "icon": "📶",
+      "isGlobal": false
+    },
+    {
+      "id": "irctc",
+      "name": "IRCTC",
+      "category": "Transport",
+      "segment": "general",
+      "icon": "🚆",
+      "isGlobal": false
+    },
+    {
+      "id": "mcdonalds",
+      "name": "McDonald's",
+      "category": "Fast Food",
+      "segment": "general",
+      "icon": "🍔",
+      "isGlobal": true
+    },
+    {
+      "id": "starbucks",
+      "name": "Starbucks",
+      "category": "Coffee",
+      "segment": "general",
+      "icon": "☕",
+      "isGlobal": true
+    }
+  ]
+}

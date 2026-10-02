@@ -1,16 +1,17 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { ALPHABET, BRAND_LETTERS } from "@/lib/brand-letters";
+import { ALPHABET, BRAND_LETTERS, type LetterBrand } from "@/lib/brand-letters";
+import { LogoBubble } from "@/components/LogoBubble";
 
 const CYCLE_MS = 4000;
 
 interface Bubble {
   id: string;
-  brand: string;
+  brand: LetterBrand;
   left: number; // percent from left
   top: number; // percent from top
-  minWidth: number; // px
+  size: number; // logo px
   delay: number; // seconds
   duration: number; // seconds
 }
@@ -18,11 +19,11 @@ interface Bubble {
 function buildBubbles(letter: string): Bubble[] {
   const brands = BRAND_LETTERS[letter] ?? [];
   return brands.map((brand, i) => ({
-    id: `${letter}-${brand}-${i}`,
+    id: `${letter}-${brand.name}-${i}`,
     brand,
-    left: 6 + Math.random() * 78,
-    top: 18 + Math.random() * 56,
-    minWidth: 76 + Math.random() * 40,
+    left: 5 + Math.random() * 82,
+    top: 16 + Math.random() * 60,
+    size: 30 + Math.random() * 18,
     delay: Math.random() * 0.7,
     duration: 3.4 + Math.random() * 1.3,
   }));
@@ -30,7 +31,7 @@ function buildBubbles(letter: string): Bubble[] {
 
 /**
  * Decorative A-Z carousel: cycles through letters, and for each one floats a
- * cluster of "favorite brand" bubbles that fade/drift in, then disappear
+ * cluster of real-brand logo bubbles that fade/drift in, then disappear
  * before the next letter takes over.
  */
 export function BrandLetterCycle() {
@@ -62,18 +63,19 @@ export function BrandLetterCycle() {
       {bubbles.map((bubble) => (
         <span
           key={bubble.id}
-          className="absolute animate-bubble-float whitespace-nowrap rounded-full border border-brand-100 bg-white/95 px-3 py-1.5 text-center text-xs font-semibold text-slate-700 shadow-sm"
+          className="absolute flex animate-bubble-float items-center gap-1.5 whitespace-nowrap rounded-full border border-brand-100 bg-white/95 py-1 pl-1 pr-3 text-center text-xs font-semibold text-slate-700 shadow-sm"
           style={{
             left: `${bubble.left}%`,
             top: `${bubble.top}%`,
-            minWidth: bubble.minWidth,
             animationDelay: `${bubble.delay}s`,
             animationDuration: `${bubble.duration}s`,
           }}
         >
-          {bubble.brand}
+          <LogoBubble name={bubble.brand.name} domain={bubble.brand.domain} size={bubble.size} />
+          {bubble.brand.name}
         </span>
       ))}
     </div>
   );
 }
+
