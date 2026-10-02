@@ -1,0 +1,18 @@
+{
+  "id": "linkedin",
+  "name": "LinkedIn",
+  "category": "professional",
+  "domains": ["linkedin.com", "www.linkedin.com"],
+  "urlPatterns": ["linkedin\\.com/in/"],
+  "icon": "💼",
+  "description": "Professional profiles — useful for verifying consultants, freelancers and recruiters.",
+  "selectors": {
+    "name": { "selector": "h1.top-card-layout__title", "description": "Profile display name" },
+    "headline": { "selector": ".top-card-layout__headline", "description": "Professional headline" },
+    "connections": { "selector": ".top-card__connections", "description": "Connection count" },
+    "experience": { "selector": "section#experience li", "description": "Work history entries" },
+    "avatar": { "selector": ".top-card-layout__entity-image", "attribute": "src", "description": "Profile photo" }
+  },
+  "checks": ["reverseImageSearch", "aiImageDetection", "crossPlatformMatch", "accountAgeHistory"],
+  "notes": "TODO: LinkedIn heavily restricts unauthenticated scraping; prefer LinkedIn's official APIs or user-provided profile exports where possible."
+}

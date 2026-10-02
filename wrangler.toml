@@ -1,0 +1,23 @@
+name = "trustping"
+compatibility_date = "2024-07-01"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir = ".vercel/output/static"
+
+# D1 database binding used by the API routes (app/api/**) for listings,
+# scores, claims, and subscription records. Create the DB with:
+#   wrangler d1 create trustping-db
+# then paste the returned database_id below.
+[[d1_databases]]
+binding = "DB"
+database_name = "trustping-db"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"
+migrations_dir = "migrations"
+
+# TODO: add KV/R2 bindings here if adapters start caching scraped HTML or
+# storing uploaded claim evidence (e.g. R2 bucket "trustping-claims").
+
+[vars]
+NEXT_PUBLIC_APP_ENV = "development"
+# TODO: set real secrets via `wrangler secret put <NAME>` for production:
+#   STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET, REVERSE_IMAGE_SEARCH_API_KEY,
+#   AI_IMAGE_DETECTION_API_KEY, SENTIMENT_API_KEY
