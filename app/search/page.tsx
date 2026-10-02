@@ -3,6 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useMemo, useState } from "react";
 import { ADAPTERS, CATEGORY_LABELS, CATEGORY_ORDER, groupAdaptersByCategory } from "@/lib/adapters";
+import { BrandLetterCycle } from "@/components/BrandLetterCycle";
 
 function SearchForm() {
   const router = useRouter();
@@ -53,6 +54,8 @@ function SearchForm() {
       <p className="mt-2 text-slate-600">
         Paste a link to any supported listing or profile, or search below to see what we support.
       </p>
+
+      <BrandLetterCycle />
 
       <form onSubmit={handlePasteSubmit} className="mt-8 flex flex-col gap-3 sm:flex-row">
         <input
