@@ -41,7 +41,7 @@ export default async function PublicListingPage({
         </div>
 
         <p className="mt-6 text-sm text-slate-600">
-          {kindCopy[entry.kind]} by TrustPing — {entry.checksPassed} of {entry.checksTotal}{" "}
+          {kindCopy[entry.kind]} by Verticified — {entry.checksPassed} of {entry.checksTotal}{" "}
           automated checks passed.
         </p>
         <p className="mt-1 text-xs text-slate-400">
