@@ -1,8 +1,5 @@
 import Link from "next/link";
 import { CountryBrandBackdrop } from "@/components/CountryBrandBackdrop";
-import { TrustedByStrip } from "@/components/TrustedByStrip";
-import { ADAPTERS, maxChecksPerListing } from "@/lib/adapters";
-import { FOUNDED_YEAR, LISTINGS_CHECKED_LABEL, yearsActive } from "@/lib/site-meta";
 
 export function Hero() {
   return (
@@ -40,29 +37,19 @@ export function Hero() {
               See pricing
             </Link>
           </div>
-          <div className="mt-10 flex flex-wrap items-center gap-6 text-sm text-slate-500">
-            <div>
-              <p className="text-2xl font-bold text-slate-900">{FOUNDED_YEAR}</p>
-              <p>Est. · {yearsActive()}+ years protecting trades</p>
-            </div>
-            <div className="h-8 w-px bg-slate-200" />
-            <div>
-              <p className="text-2xl font-bold text-slate-900">{LISTINGS_CHECKED_LABEL}</p>
-              <p>Listings checked to date</p>
-            </div>
-            <div className="h-8 w-px bg-slate-200" />
-            <div>
-              <p className="text-2xl font-bold text-slate-900">{ADAPTERS.length}</p>
-              <p>Deep-scanned platforms</p>
-            </div>
-            <div className="h-8 w-px bg-slate-200" />
-            <div>
-              <p className="text-2xl font-bold text-slate-900">{maxChecksPerListing()}</p>
-              <p>Independent checks per listing</p>
-            </div>
-          </div>
-          <div className="mt-8 border-t border-slate-200/70 pt-6">
-            <TrustedByStrip />
+          <div className="mt-10 grid max-w-lg gap-3 rounded-2xl border border-white/80 bg-white/70 p-4 text-sm text-slate-600 shadow-sm sm:grid-cols-3">
+            <p>
+              <span className="block font-semibold text-slate-900">Demo data</span>
+              Scores and activity are simulated.
+            </p>
+            <p>
+              <span className="block font-semibold text-slate-900">No live checks</span>
+              Marketplace integrations are not connected.
+            </p>
+            <p>
+              <span className="block font-semibold text-slate-900">Preview only</span>
+              No paid services, claims, or coverage.
+            </p>
           </div>
         </div>
       </div>

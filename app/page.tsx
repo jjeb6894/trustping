@@ -1,6 +1,5 @@
 import { Hero } from "@/components/Hero";
 import { HowItWorks } from "@/components/HowItWorks";
-import { Testimonials } from "@/components/Testimonials";
 import { LiveTicker } from "@/components/LiveTicker";
 import { TrustBadge } from "@/components/TrustBadge";
 import { LocalListingShowcase } from "@/components/LocalListingShowcase";
@@ -32,7 +31,6 @@ export default function HomePage() {
       <HowItWorks />
       <LocalListingShowcase />
       <LocalTrustBoard />
-      <Testimonials />
     </>
   );
 }
