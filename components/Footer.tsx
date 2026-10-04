@@ -5,9 +5,9 @@ export function Footer() {
     <footer className="border-t border-slate-100 bg-slate-50">
       <div className="mx-auto grid max-w-6xl gap-8 px-6 py-10 md:grid-cols-4">
         <div>
-          <p className="text-lg font-bold text-slate-900">TrustPing</p>
+          <p className="text-lg font-bold text-slate-900">Verticified</p>
           <p className="mt-2 text-sm text-slate-500">
-            Preview the planned TrustPing workflow. All listings and scores shown are sample data.
+            Get trusted. Get certified. Verticified is a prototype; displayed scores and activity are sample data.
           </p>
         </div>
         <div>
@@ -33,13 +33,13 @@ export function Footer() {
             <li><span className="cursor-default">Security</span></li>
           </ul>
           <p className="mt-3 text-sm text-slate-500">
-            Prototype only: all scores are simulated. TrustPing does not currently verify
+            Prototype only: all scores are simulated. Verticified does not currently verify
             listings, provide insurance, accept claims, or offer paid services.
           </p>
         </div>
       </div>
       <div className="border-t border-slate-100 py-4 text-center text-xs text-slate-400">
-        © {new Date().getFullYear()} TrustPing prototype.
+        © {new Date().getFullYear()} Verticified prototype.
       </div>
     </footer>
   );
