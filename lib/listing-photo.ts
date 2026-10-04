@@ -16,7 +16,8 @@ interface R2Bucket {
 
 function photoBucket(): R2Bucket | null {
   try {
-    return getCloudflareContext().env.LISTING_PHOTOS as R2Bucket;
+    const env = getCloudflareContext().env as unknown as { LISTING_PHOTOS?: R2Bucket };
+    return env.LISTING_PHOTOS ?? null;
   } catch {
     return null;
   }
