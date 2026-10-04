@@ -12,23 +12,23 @@ export function Hero() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-400 opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-500" />
             </span>
-            Interactive prototype · simulated checks
+            Verticified · prototype preview
           </span>
           <h1 className="mt-6 text-4xl font-bold leading-tight tracking-tight text-slate-900 md:text-5xl">
-            Paste a link. <br />
-            Get a <span className="text-brand-500">Trust Score</span>.
+            Get trusted. <br />
+            Get <span className="text-brand-500">certified.</span>
           </h1>
           <p className="mt-4 max-w-md text-lg text-slate-600">
-            Explore the planned TrustPing workflow for marketplace listings and profiles.
-            Results and activity shown here are simulated; no listings are verified and no
-            insurance coverage is offered.
+            Are you ready to get trusted and certified? Get Verticified today. Explore our
+            planned trust-check workflow for marketplace listings and profiles. This prototype
+            uses simulated results; no listings are currently verified.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-4">
             <Link
               href="/search"
               className="rounded-full bg-brand-500 px-6 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-brand-600"
             >
-              Run a Trust Check
+              Get Verticified today
             </Link>
             <Link
               href="/pricing"
