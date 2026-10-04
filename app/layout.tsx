@@ -4,9 +4,18 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "TrustPing — Trust Score for any listing or profile",
+  metadataBase: new URL("https://verticified.com"),
+  title: "Verticified — Get trusted. Get certified.",
   description:
-    "Explore the TrustPing prototype. Trust scores are simulated; no listings are verified and no insurance coverage is provided.",
+    "Verticified is building a trust-check platform for marketplace listings and profiles. This prototype uses simulated results; listings are not verified and no insurance coverage is provided.",
+  openGraph: {
+    title: "Verticified — Get trusted. Get certified.",
+    description:
+      "Explore the Verticified prototype. Results are simulated; listings are not verified and no insurance coverage is provided.",
+    url: "https://verticified.com/",
+    siteName: "Verticified",
+    type: "website",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
