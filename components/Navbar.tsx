@@ -18,7 +18,7 @@ export function Navbar() {
               <path d="M10 1.5 3 4v5.2c0 4.6 3 8.3 7 9.3 4-1 7-4.7 7-9.3V4l-7-2.5Zm-.9 11.8L6 10.2l1.1-1.1 2 1.9 4-4 1.1 1.1-5.1 5.2Z" />
             </svg>
           </span>
-          TrustPing
+          Verticified
         </Link>
         <nav className="hidden items-center gap-6 md:flex">
           <PlatformMegaMenu />
@@ -36,7 +36,7 @@ export function Navbar() {
           href="/search"
           className="rounded-full bg-brand-500 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-600"
         >
-          Check a listing
+          Get Verticified today
         </Link>
       </div>
     </header>
