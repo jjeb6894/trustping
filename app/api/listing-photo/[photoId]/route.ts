@@ -1,6 +1,5 @@
 import { getSavedAutoTraderPhoto } from "@/lib/listing-photo";
 
-export const runtime = "edge";
 
 export async function GET(
   _request: Request,
