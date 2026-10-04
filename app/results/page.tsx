@@ -95,6 +95,13 @@ function ResultsContent() {
           </div>
         )}
 
+        {result.photoUrl && (
+          <figure className="mt-6 overflow-hidden rounded-2xl border border-slate-100 bg-slate-50">
+            <img src={result.photoUrl} alt="Vehicle from the Auto Trader listing" className="max-h-[420px] w-full object-cover" />
+            <figcaption className="px-4 py-2 text-xs text-slate-500">Listing photo saved from Auto Trader</figcaption>
+          </figure>
+        )}
+
         <div className="mt-6 space-y-4">
           <h2 className="text-lg font-semibold text-slate-900">
             Check breakdown <span className="font-normal text-slate-500">({result.checks.length} checks run)</span>
