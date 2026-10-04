@@ -28,8 +28,8 @@ UI is fully demoable without any real API keys.
 
 ## Tech stack
 
-- **Next.js 14** (App Router) + **TypeScript** + **Tailwind CSS**
-- **Cloudflare Pages** for hosting, via `@cloudflare/next-on-pages`
+- **Next.js 15** (App Router) + **TypeScript** + **Tailwind CSS**
+- **Cloudflare Workers** for hosting, via `@opennextjs/cloudflare`
 - **Cloudflare D1** (SQLite at the edge) for `users`, `listings`, `scores`, `claims`,
   `subscriptions`
 - **Stripe** for one-off verification fees and seller subscriptions (test mode)
@@ -164,34 +164,15 @@ shipping-policy check; an eBay listing doesn't need follower-authenticity analys
 - **D1 persistence** — `app/api/check/route.ts` and `app/api/claims/route.ts` have TODOs for
   the `INSERT`s once a D1 binding is available in the deployed environment (see `lib/db.ts`).
 
-## Deploying to Cloudflare Pages
+## Deploying to Cloudflare Workers
 
-1. **Create the D1 database** (one-time):
-   ```bash
-   npx wrangler d1 create trustping-db
-   # paste the returned database_id into wrangler.toml -> [[d1_databases]] -> database_id
-   ```
-2. **Run migrations**:
-   ```bash
-   npm run db:migrate:local   # local dev DB
-   npm run db:migrate:remote  # production D1
-   ```
-3. **Set secrets** (production):
-   ```bash
-   npx wrangler secret put STRIPE_SECRET_KEY
-   npx wrangler secret put STRIPE_WEBHOOK_SECRET
-   # ...and any real check-provider API keys
-   ```
-4. **Build for Pages and deploy**:
-   ```bash
-   npm run pages:build   # npx @cloudflare/next-on-pages
-   npm run pages:deploy  # wrangler pages deploy .vercel/output/static
-   ```
-   Or connect the repo in the Cloudflare Pages dashboard and set the build command to
-   `npx @cloudflare/next-on-pages` with output directory `.vercel/output/static`.
-5. In the Pages project settings, bind the `DB` D1 database (same `binding = "DB"` as
-   `wrangler.toml`) so `lib/db.ts` can be updated to read it via
-   `getRequestContext().env.DB` from `@cloudflare/next-on-pages`.
+This project uses the maintained OpenNext adapter. Build a Workers bundle with
+`npm run worker:build`, preview it locally with `npm run preview`, or deploy with
+`npm run deploy`. The `wrangler.toml` file configures the Worker and static assets.
+
+The D1 schema is included, but D1 persistence is not wired into the demo API yet. Create
+and bind a production D1 database only when implementing those queries. Stripe checkout
+also remains disabled until real Stripe secrets and Price IDs are configured.
 
 ## Known limitations of this scaffold
 

@@ -78,7 +78,11 @@ function ResultsContent() {
             </p>
             <p className="mt-1 max-w-sm truncate text-sm text-slate-500">{result.url}</p>
             <div className="mt-4">
-              <TrustBadge tier={result.tier} label={result.tierLabel} size="lg" />
+              <TrustBadge
+                tier={result.tier}
+                label={result.tier === "insured" ? "Sample score" : result.tierLabel}
+                size="lg"
+              />
             </div>
           </div>
           <ScoreGauge score={result.score} tier={result.tier} />
@@ -86,12 +90,8 @@ function ResultsContent() {
 
         {result.tier === "insured" && (
           <div className="mt-6 rounded-xl bg-emerald-50 p-4 text-sm text-emerald-800 ring-1 ring-emerald-100">
-            This listing qualifies for <strong>Insured Verified</strong> — TrustPing financially
-            backs this transaction. {" "}
-            <Link href="/claims" className="font-semibold underline">
-              File a claim
-            </Link>{" "}
-            if something goes wrong.
+            This is a simulated result for the prototype. It is not a verification, insurance
+            policy, or financial guarantee.
           </div>
         )}
 

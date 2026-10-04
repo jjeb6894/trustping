@@ -17,7 +17,7 @@ import type { CountryBrandBoard } from "@/types";
  */
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const countryCode = resolveCountryCode(searchParams.get("country"), headers());
+  const countryCode = resolveCountryCode(searchParams.get("country"), await headers());
   const data = getCountryBrandData(countryCode);
 
   const brands = data.brands

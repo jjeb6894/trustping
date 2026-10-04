@@ -2,39 +2,39 @@
   "name": "trustping",
   "version": "0.1.0",
   "private": true,
-  "description": "TrustPing — paste a listing link, get a Trust Score. Cloudflare Pages + D1 scaffold.",
+  "description": "TrustPing prototype — simulated trust scores on Cloudflare Workers.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "pages:build": "npx @cloudflare/next-on-pages",
-    "pages:deploy": "npm run pages:build && wrangler pages deploy .vercel/output/static",
-    "db:migrate:local": "wrangler d1 migrations apply trustping-db --local",
-    "db:migrate:remote": "wrangler d1 migrations apply trustping-db --remote"
+    "worker:build": "opennextjs-cloudflare build",
+    "preview": "npm run worker:build && opennextjs-cloudflare preview",
+    "deploy": "npm run worker:build && opennextjs-cloudflare deploy",
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
   },
   "dependencies": {
-    "next": "14.2.35",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
+    "next": "^16.3.8",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
     "stripe": "16.2.0"
   },
   "devDependencies": {
-    "@cloudflare/next-on-pages": "1.13.2",
-    "@cloudflare/workers-types": "4.20240725.0",
+    "@cloudflare/workers-types": "^5.20261004.1",
+    "@opennextjs/cloudflare": "^1.20.7",
     "@types/node": "20.14.11",
-    "@types/react": "18.3.3",
-    "@types/react-dom": "18.3.0",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
     "autoprefixer": "10.4.19",
-    "eslint": "8.57.0",
-    "eslint-config-next": "14.2.35",
-    "postcss": "8.4.39",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "^16.3.8",
+    "postcss": "^8.5.28",
     "tailwindcss": "3.4.6",
     "typescript": "5.5.3",
-    "wrangler": "3.67.1"
+    "wrangler": "^4.125.0"
   },
   "engines": {
-    "node": ">=18.17.0"
+    "node": ">=22.0.0"
   }
 }

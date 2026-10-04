@@ -15,16 +15,16 @@ export function Hero() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-400 opacity-75" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-500" />
             </span>
-            Live verifications happening right now
+            Interactive prototype · simulated checks
           </span>
           <h1 className="mt-6 text-4xl font-bold leading-tight tracking-tight text-slate-900 md:text-5xl">
             Paste a link. <br />
             Get a <span className="text-brand-500">Trust Score</span>.
           </h1>
           <p className="mt-4 max-w-md text-lg text-slate-600">
-            TrustPing checks listings and profiles from eBay, Amazon, Facebook Marketplace,
-            AutoTrader, LinkedIn, Instagram and more — then backs the highest-scoring
-            transactions with real insurance.
+            Explore the planned TrustPing workflow for marketplace listings and profiles.
+            Results and activity shown here are simulated; no listings are verified and no
+            insurance coverage is offered.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-4">
             <Link

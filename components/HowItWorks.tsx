@@ -3,25 +3,25 @@ const STEPS = [
     step: "1",
     title: "Paste a link or search",
     description:
-      "Drop in a listing or profile URL from any supported platform, or search by name.",
+      "Drop in a listing or profile URL to preview the planned user flow.",
   },
   {
     step: "2",
     title: "We run the Trust Check pipeline",
     description:
-      "Reverse image search, AI-image detection, cross-platform identity match, account history and review sentiment — all in parallel.",
+      "The prototype displays sample signals; it does not perform real image, identity, account, or review checks.",
   },
   {
     step: "3",
     title: "Get a Trust Score & badge",
     description:
-      "A 0-100 score with a clear tier badge. 90+ unlocks Insured Verified, backing the transaction financially.",
+      "A simulated 0-100 score with a sample tier badge. It is not a real verification or financial guarantee.",
   },
   {
     step: "4",
     title: "Optional human validation",
     description:
-      "Want more certainty? Request a paid manual review from our verification team.",
+      "Manual reviews are not available in this prototype.",
   },
 ];
 

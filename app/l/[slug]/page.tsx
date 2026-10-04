@@ -5,8 +5,13 @@ import { ScoreGauge } from "@/components/ScoreGauge";
 import { TrustBadge } from "@/components/TrustBadge";
 import { LISTING_KIND_LABELS } from "@/types";
 
-export default function PublicListingPage({ params }: { params: { slug: string } }) {
-  const entry = decodeDirectorySlug(params.slug);
+export default async function PublicListingPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const entry = decodeDirectorySlug(slug);
   if (!entry) notFound();
 
   const kindCopy: Record<string, string> = {

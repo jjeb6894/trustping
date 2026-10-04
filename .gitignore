@@ -12,6 +12,7 @@
 
 # production
 /build
+/.open-next/
 
 # cloudflare
 /.vercel

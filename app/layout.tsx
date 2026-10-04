@@ -6,7 +6,7 @@ import { Footer } from "@/components/Footer";
 export const metadata: Metadata = {
   title: "TrustPing — Trust Score for any listing or profile",
   description:
-    "Paste a link from eBay, Amazon, Facebook Marketplace, AutoTrader, LinkedIn, Instagram and more to get an instant Trust Score, backed by insurance on the highest tier.",
+    "Explore the TrustPing prototype. Trust scores are simulated; no listings are verified and no insurance coverage is provided.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -14,6 +14,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className="flex min-h-screen flex-col">
         <Navbar />
+        <aside
+          role="status"
+          className="border-b border-amber-300 bg-amber-50 px-4 py-3 text-center text-sm font-medium text-amber-950"
+        >
+          Prototype: results are simulated. Listings are not verified; no insurance, claims,
+          human reviews, or payments are available.
+        </aside>
         <main className="flex-1">{children}</main>
         <Footer />
       </body>

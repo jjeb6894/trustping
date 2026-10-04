@@ -41,8 +41,8 @@ export function Footer() {
             <li><span className="cursor-default">Security</span></li>
           </ul>
           <p className="mt-3 text-sm text-slate-500">
-            Insured Verified claims are subject to review. TrustPing is a demo scaffold —
-            replace this copy before launch.
+            Prototype only: all scores are simulated. TrustPing does not currently verify
+            listings, provide insurance, accept claims, or offer paid services.
           </p>
         </div>
       </div>
