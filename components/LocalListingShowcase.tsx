@@ -29,8 +29,8 @@ const DEFAULT_LISTING = { title: "Sample listing", price: "—", meta: "" };
 
 /**
  * Shows a few mock "listing screenshot" cards from the detected country's
- * actual buying/selling sites, each stamped with a live TrustPing badge —
- * a preview of what the badge looks like once it's on a real listing.
+ * actual buying/selling sites, each stamped with a Verticified badge —
+ * a prototype preview of how the badge may look on a listing.
  */
 export function LocalListingShowcase() {
   const { board } = useCountryBrandBoard();
@@ -45,8 +45,8 @@ export function LocalListingShowcase() {
         {board.flag} The badge, live on {board.countryName}&rsquo;s own listings
       </h2>
       <p className="mt-2 max-w-xl text-slate-600">
-        A preview of how TrustPing looks once it&rsquo;s stamped directly onto listings from the
-        sites people in your region already use to buy and sell.
+        A prototype preview of how a Verticified badge could appear on listings from the sites
+        people in your region already use to buy and sell. Nothing here is a real verification.
       </p>
       <div className="mt-8 grid gap-6 md:grid-cols-3">
         {tradingSites.map((entry) => {
