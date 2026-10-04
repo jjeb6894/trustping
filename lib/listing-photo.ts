@@ -1,4 +1,4 @@
-import { createHash } from "node:crypto";
+import { getCloudflareContext } from "@opennextjs/cloudflare";
 
 interface R2Object {
   body: ReadableStream<Uint8Array>;
@@ -15,7 +15,11 @@ interface R2Bucket {
 }
 
 function photoBucket(): R2Bucket | null {
-  return (globalThis as unknown as { LISTING_PHOTOS?: R2Bucket }).LISTING_PHOTOS ?? null;
+  try {
+    return getCloudflareContext().env.LISTING_PHOTOS as R2Bucket;
+  } catch {
+    return null;
+  }
 }
 
 function isAllowedAutoTraderHost(hostname: string): boolean {
@@ -85,7 +89,8 @@ export async function saveAutoTraderPhoto(listingUrl: string): Promise<string | 
   const bytes = await imageResponse.arrayBuffer();
   if (bytes.byteLength === 0 || bytes.byteLength > 10_000_000) return null;
 
-  const listingKey = createHash("sha256").update(pageUrl.toString()).digest("hex");
+  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(pageUrl.toString()));
+  const listingKey = Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, "0")).join("");
   await bucket.put(`autotrader/${listingKey}`, bytes, {
     httpMetadata: { contentType, cacheControl: "public, max-age=3600" },
   });
