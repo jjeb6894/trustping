@@ -22,3 +22,9 @@ keywords (autocomplete rank = relative volume; green = searched but not seen in 
 
 Caveats: Google gives bucketed volumes only (5K+, 100K+); autocomplete rank is a relative proxy; Etsy blocks scraping so
 supply comes from Amazon/eBay suggestions. Brand/celebrity trends carry trademark risk, so prefer generic angles.
+
+## Dock launcher
+
+    ./make_app.sh   # builds ~/Applications/Trend Radar.app (copies scripts to ~/.trend-radar)
+
+Drag the app to the Dock. Click it: starts the server if needed and opens the dashboard. Re-run after editing the scripts.
