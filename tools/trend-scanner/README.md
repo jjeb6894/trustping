@@ -28,3 +28,8 @@ supply comes from Amazon/eBay suggestions. Brand/celebrity trends carry trademar
     ./make_app.sh   # builds ~/Applications/Trend Radar.app (copies scripts to ~/.trend-radar)
 
 Drag the app to the Dock. Click it: starts the server if needed and opens the dashboard. Re-run after editing the scripts.
+
+## eBay listing drafts
+
+Expanded rows include a copy-paste eBay draft (title, cost+markup price, price after eBay fees, description) for each reference item.
+Only list items you own, with your own photos; dropshipping from other retailers violates eBay policy.

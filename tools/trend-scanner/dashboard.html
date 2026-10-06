@@ -36,12 +36,12 @@ textarea{width:100%;height:84px;font-size:11.5px;resize:vertical}.copy{white-spa
 <header><h1>📡 Trend Radar</h1><span class=meta id=meta>loading… first scan takes ~1 min</span>
 <input id=q placeholder="filter…" style="width:110px"><button data-f=all class=on>All</button><button data-f=small>Small</button><button data-f=big>Big</button>
 <select id=sort><option value=vol>Sort: searches</option><option value=score>Sort: score</option><option value=new>Sort: newest</option></select>
-<input id=dom title="Your Cloudflare domain" placeholder="mydomain.com"><input id=mk class=s title="Price markup %" type=number value=30>%</header>
+<input id=dom title="Your Cloudflare domain" placeholder="mydomain.com"><input id=mk class=s title="Profit markup %" type=number value=50>%</header>
 <main id=list></main>
 <script>
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 let D={trends:[]},filter='all',open_=new Set(),deepc={},edits=JSON.parse(localStorage.edits||'{}'),lastKey='';
-$('#dom').value=localStorage.dom||'mydomain.com';$('#mk').value=localStorage.mk||30;
+$('#dom').value=localStorage.dom||'mydomain.com';$('#mk').value=localStorage.mk2||50;
 const fmtN=n=>n>=1e6?(n/1e6).toFixed(1)+'M':n>=1e3?(n/1e3).toFixed(n>=1e4?0:1)+'K':String(Math.round(n));
 const fmtT=m=>m<1?'just now':m<60?m+' min ago':m<1440?Math.floor(m/60)+' h '+String(m%60).padStart(2,'0')+' m ago':Math.floor(m/1440)+' d ago';
 const col=s=>s>=65?'var(--g)':s>=40?'var(--y)':'var(--r)';
@@ -51,11 +51,16 @@ const p=a.map((v,i)=>(i/(a.length-1)*w).toFixed(1)+','+(h-2-(v-mn)/((mx-mn)||1)*
 return`<svg width=${w} height=${h}><polyline points="${p}" fill=none stroke="#4da3ff" stroke-width=2 /></svg>`}
 function intent(i){const c={informational:'#4da3ff',commercial:'#f1c40f',transactional:'#2ecc71',navigational:'#9b59b6'};
 return Object.entries(i).map(([k,v])=>`<div class=sub>${k} ${v}%</div><div class=bar><i style="width:${v}%;background:${c[k]}"></i></div>`).join('')}
-function prompt(term,kws){const d=$('#dom').value||'mydomain.com',m=$('#mk').value||30;
+function prompt(term,kws){const d=$('#dom').value||'mydomain.com',m=$('#mk').value||50;
 const lines=kws.map((k,i)=>`${i+1}. https://${d}/${slug(k.kw)}   (keyword: "${k.kw}"${k.vol?', ~'+fmtN(k.vol)+' searches':''})`).join('\n');
 return `On my domain hosted on Cloudflare, make ${kws.length>1?kws.length+' pages with these slugs':'a page with this slug'}:\n${lines}\nThese are items being sold for the trend "${term}". For each item, find where it is selling the cheapest right now and increase that price by ${m}%.`}
 function pbox(key,term,kws,label){const v=edits[key]??prompt(term,kws);
-return`<div><textarea data-k="${esc(key)}">${esc(v)}</textarea></div><button class=copy data-copy="${esc(key)}">${label||'Copy prompt'}</button>`}
+return`<div><textarea data-k="${esc(key)}">${esc(v)}</textarea></div><button class=copy data-lbl="${label||'Copy prompt'}">${label||'Copy prompt'}</button>`}
+function ebayDraft(t,d,i,n){const m=+($('#mk').value||50),cost=i.price,list=Math.ceil(cost*(1+m/100))-0.01,
+safe=Math.ceil((cost*(1+m/100)+0.30)/(1-0.1325))-0.01,kw=d.top3[0]?d.top3[0].kw:t.term;
+const clean=i.title.replace(/[^\w\s&'-]/g,' ').replace(/\s+/g,' ').trim(),title=(clean.toLowerCase().includes(t.term.toLowerCase())?clean:t.term+' '+clean).slice(0,80);
+const text=`TITLE (${title.length}/80):\n${title}\n\nPRICE: $${list.toFixed(2)}  (cost $${cost} + ${m}%)\nPRICE AFTER EBAY FEES (~13.25% + $0.30): $${safe.toFixed(2)}\n\nDESCRIPTION:\n${i.title}\nCondition: <fill in after inspecting>\nTrending: ${t.term}. Ships within 1 business day.\n\nPHOTOS: use your own photos of the item you own.`;
+const key='eb:'+t.term+':'+n;return`<div class=lv style="grid-template-columns:70px 1fr auto"><a class=it href="${esc(i.url)}" target=_blank><img src="${esc(i.img)}" style="width:70px;height:70px"></a>${pbox(key,t.term,[],'Copy listing').replace(/<textarea([^>]*)>[^<]*<\/textarea>/,(x,a)=>`<textarea${a}>${esc(edits[key]??text)}</textarea>`)}</div>`}
 function items(list,cls=''){return list.map(i=>`<a class="it ${cls}" href="${esc(i.url)}" target=_blank title="${esc(i.title)}"><img loading=lazy src="${esc(i.img)}"><div class=p>$${i.price}</div><div class=s>${esc(i.store)}</div></a>`).join('')}
 function row(t){const d=t.deep||deepc[t.term],w=t.wiki||{},h=t.hist||{},m=t.mentions||{},n=m.news||{};
 const ratio=w.avg?w.yesterday/w.avg:0;
@@ -76,8 +81,9 @@ const sell=`<div><h4>Selling right now</h4><div class=items>${items(d.items,'big
 <h4>Sold on Amazon/eBay (suggestions)</h4>${d.sold.map(s=>`<span class=tag>${esc(s)}</span>`).join('')||'<span class=sub>nothing = wide open</span>'}</div>`;
 const gaps=`<div><h4>Search intent</h4>${intent(d.intent)}<h4>Asset gaps: demand vs supply</h4><table><tr><th>Asset<th>Demand<th>Supply<th></tr>${d.gaps.map(g=>`<tr title="${esc(g.queries.join(' | '))}"><td>${esc(g.asset)}<td>${g.demand}<td>${g.supply}<td><span class="pill ${g.status}">${g.status}</span></tr>`).join('')||'<tr><td colspan=4 class=sub>no confirmed demand yet</tr>'}</table></div>`;
 const low=`<div class=full><h4>🎯 Low-volume keywords people search (little competition)</h4>${d.lowvol.map((k,i)=>`<div class=lv><div class=t>${esc(k.kw)}<br><span class=v>~${fmtN(k.vol)}</span> <span class=sub>${k.sold?'sold':'not sold'}</span></div>${pbox('lv:'+t.term+':'+k.kw,t.term,[k])}</div>`).join('')||'<span class=sub>none found</span>'}</div>`;
+const eb=`<div class=full><h4>🏷 eBay listing draft (test one item) — list only items you own, with your own photos</h4>${d.items.slice(0,3).map((i,n)=>ebayDraft(t,d,i,n)).join('')||'<span class=sub>no reference items</span>'}</div>`;
 const main=`<div class=full><h4>🌐 Pages for the top 3 keywords</h4><div class=lv style="grid-template-columns:1fr auto">${pbox('top:'+t.term,t.term,d.top3,'Copy prompt')}</div></div>`;
-return left+sell+gaps+main+low}
+return left+sell+gaps+eb+main+low}
 function sorted(){const a=[...D.trends],s=$('#sort').value;
 a.sort(s=='vol'?(x,y)=>((y.deep||{}).top3_total||y.volume)-((x.deep||{}).top3_total||x.volume):s=='new'?(x,y)=>x.age_min-y.age_min:(x,y)=>y.score-x.score);return a}
 function render(force){const ae=document.activeElement;if(!force&&ae&&ae.tagName=='TEXTAREA')return;
@@ -88,12 +94,12 @@ if(open_.has(t)){open_.delete(t);r.classList.remove('open');return}open_.add(t);
 const tr=D.trends.find(x=>x.term==t);if(!tr.deep&&!deepc[t]){deepc[t]=await(await fetch('/api/deep?term='+encodeURIComponent(t))).json();render(true)}});
 document.querySelectorAll('textarea').forEach(a=>a.oninput=()=>{edits[a.dataset.k]=a.value;localStorage.edits=JSON.stringify(edits)});
 document.querySelectorAll('.copy').forEach(b=>b.onclick=async()=>{const a=b.previousElementSibling.querySelector('textarea');
-try{await navigator.clipboard.writeText(a.value)}catch(e){a.select();document.execCommand('copy')}b.textContent='Copied ✓';b.classList.add('ok');setTimeout(()=>{b.textContent='Copy prompt';b.classList.remove('ok')},1500)})}
+try{await navigator.clipboard.writeText(a.value)}catch(e){a.select();document.execCommand('copy')}const lbl=b.dataset.lbl;b.textContent='Copied ✓';b.classList.add('ok');setTimeout(()=>{b.textContent=lbl;b.classList.remove('ok')},1500)})}
 async function load(){try{D=await(await fetch('/api/trends')).json()}catch(e){return}
 $('#meta').textContent=D.updated?`updated ${new Date(D.updated*1e3).toLocaleTimeString()} · ${D.trends.length} trends · next scan ${new Date(D.next*1e3).toLocaleTimeString()} · volumes are estimates ${D.error?'· '+D.error:''}`:'first scan running (~1 min)…';
 if(String(D.updated)!==lastKey){lastKey=String(D.updated);render()}}
 document.querySelectorAll('button[data-f]').forEach(b=>b.onclick=()=>{filter=b.dataset.f;document.querySelectorAll('button[data-f]').forEach(x=>x.classList.toggle('on',x==b));render(true)});
 $('#q').oninput=()=>render(true);$('#sort').onchange=()=>render(true);
-$('#dom').oninput=()=>{localStorage.dom=$('#dom').value;render(true)};$('#mk').oninput=()=>{localStorage.mk=$('#mk').value;render(true)};
+$('#dom').oninput=()=>{localStorage.dom=$('#dom').value;render(true)};$('#mk').oninput=()=>{localStorage.mk2=$('#mk').value;render(true)};
 load();setInterval(load,15000)
 </script>
