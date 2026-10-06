@@ -1,0 +1,68 @@
+<!doctype html><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Trend Radar</title>
+<style>
+:root{--bg:#0d0f14;--card:#161a22;--line:#262c38;--tx:#e8eaf0;--mut:#8b93a5;--g:#2ecc71;--y:#f1c40f;--r:#e74c3c;--b:#4da3ff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.45 system-ui,sans-serif}
+header{position:sticky;top:0;background:#0d0f14ee;backdrop-filter:blur(6px);padding:12px 20px;border-bottom:1px solid var(--line);display:flex;gap:14px;align-items:center;flex-wrap:wrap;z-index:5}
+h1{font-size:18px;margin:0}.meta{color:var(--mut);font-size:12px;flex:1}
+button,input{background:var(--card);color:var(--tx);border:1px solid var(--line);border-radius:8px;padding:6px 10px;font:inherit}
+button.on{border-color:var(--b);color:var(--b)}main{max-width:1250px;margin:auto;padding:14px 20px}
+.row{background:var(--card);border:1px solid var(--line);border-radius:12px;margin:10px 0;overflow:hidden}
+.head{display:grid;grid-template-columns:54px 1.6fr 1fr 1fr 1fr 1.3fr;gap:12px;padding:12px 14px;cursor:pointer;align-items:center}
+.head:hover{background:#1b2029}.score{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-weight:700;border:3px solid}
+.term{font-weight:650;font-size:16px}.sub{color:var(--mut);font-size:12px}.k{color:var(--mut);font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+.v{font-size:17px;font-weight:650}.up{color:var(--g)}.down{color:var(--r)}
+.pill{display:inline-block;padding:1px 8px;border-radius:99px;font-size:11px;margin-right:4px}
+.big{background:#5b2630}.small{background:#1d4d33}.OPEN{background:#1d4d33;color:#7dffb0}.contested{background:#5a4a14;color:#ffe08a}.crowded{background:#5b2630;color:#ff9aa8}
+.det{display:none;border-top:1px solid var(--line);padding:14px;grid-template-columns:1fr 1fr 1fr;gap:18px}.open .det{display:grid}
+h4{margin:0 0 6px;font-size:12px;color:var(--mut);text-transform:uppercase;letter-spacing:.05em}
+.tag{display:inline-block;background:#222a38;border-radius:6px;padding:2px 8px;margin:2px 2px 2px 0;font-size:12px}.tag.hot{background:#1d4d33}
+.bar{height:8px;border-radius:4px;background:#222a38;margin:3px 0 8px;overflow:hidden}.bar i{display:block;height:100%}
+a{color:var(--b);text-decoration:none}a:hover{text-decoration:underline}svg{display:block}
+table{width:100%;border-collapse:collapse;font-size:12px}td,th{padding:3px 6px;text-align:left;border-bottom:1px solid var(--line)}
+@media(max-width:900px){.head{grid-template-columns:50px 1fr 1fr}.det{grid-template-columns:1fr}}
+</style>
+<header><h1>📡 Trend Radar</h1><span class=meta id=meta>loading… first scan takes ~1 min</span>
+<input id=q placeholder="filter…"><button data-f=all class=on>All</button><button data-f=small>Small</button><button data-f=big>Big</button></header>
+<main id=list></main>
+<script>
+const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let D={trends:[]},filter='all',open_=new Set(),deepc={};
+const col=s=>s>=65?'var(--g)':s>=40?'var(--y)':'var(--r)';
+const ago=ts=>{const m=Math.round((Date.now()/1e3-ts)/60);return m<60?m+' min':m<1440?Math.round(m/60)+' h':Math.round(m/1440)+' d'};
+function spark(a,w=110,h=26){if(!a||a.length<2)return'<svg width='+w+' height='+h+'></svg>';const mx=Math.max(...a)||1,mn=Math.min(...a);
+const p=a.map((v,i)=>(i/(a.length-1)*w).toFixed(1)+','+(h-2-(v-mn)/((mx-mn)||1)*(h-4)).toFixed(1)).join(' ');
+return`<svg width=${w} height=${h}><polyline points="${p}" fill=none stroke="#4da3ff" stroke-width=2 /></svg>`}
+function intent(i){const c={informational:'#4da3ff',commercial:'#f1c40f',transactional:'#2ecc71',navigational:'#9b59b6'};
+return Object.entries(i).map(([k,v])=>`<div class=sub>${k} ${v}%</div><div class=bar><i style="width:${v}%;background:${c[k]}"></i></div>`).join('')}
+function row(t){const d=t.deep||deepc[t.term],w=t.wiki||{},h=t.hist||{},m=t.mentions||{};
+const ratio=w.avg?w.yesterday/w.avg:0,n=m.news||{};
+const sold=d?d.sold.slice(0,3).map(s=>`<span class=tag>${esc(s)}</span>`).join(''):'<span class=sub>click to load</span>';
+const open=d&&d.gaps.filter(g=>g.status=='OPEN').length;
+return`<div class="row ${open_.has(t.term)?'open':''}" data-t="${esc(t.term)}"><div class=head>
+<div class=score style="border-color:${col(t.score)};color:${col(t.score)}">${t.score}</div>
+<div><div class=term>${esc(t.term)}</div><div class=sub><span class="pill ${t.size}">${t.size}</span>Google #${t.rank} · ${esc((t.news[0]||{}).title||'no headline yet').slice(0,80)}</div></div>
+<div><div class=k>Search volume</div><div class=v>${t.volume_fmt}+</div>${spark(h.spark)}</div>
+<div><div class=k>Trended</div><div class=v>${h.runs||1}× <span class=sub>(${h.snaps||1} scans)</span></div><div class=sub>first seen ${ago(h.first||Date.now()/1e3)} ago · best #${h.best_rank||t.rank}</div></div>
+<div><div class=k>Visits (Wikipedia/day)</div><div class=v>${(w.yesterday||0).toLocaleString()} <span class="${ratio>=1.5?'up':''}">${ratio?(ratio.toFixed(1)+'×'):''}</span></div>${spark(w.series)}</div>
+<div><div class=k>Mentions · Selling</div><div class=sub>news ${n.d1??'…'}/24h ${n.d7??'…'}/7d · HN ${m.hn??'…'}/24h</div><div>${sold}</div></div></div>
+<div class=det>${detail(t,d)}</div></div>`}
+function detail(t,d){const why=t.news.map(n=>`<div><a href="${esc(n.url)}" target=_blank>${esc(n.title)}</a> <span class=sub>${esc(n.source)}</span></div>`).join('');
+const left=`<div><h4>Why it's trending</h4>${why||'–'}<p class=sub>${esc(t.about)}</p><h4>Opportunity</h4><div class=sub>${d?esc(d.note):''}</div></div>`;
+if(!d)return left+'<div class=sub>loading analysis…</div><div></div>';
+const kw=`<div><h4>Keywords (autocomplete rank = volume order)</h4>${d.keywords.map(k=>`<span class="tag ${k.sold?'':'hot'}" title="${k.sold?'already sold':'not seen in marketplaces'}">#${k.pos} ${esc(k.kw)}</span>`).join('')}
+<h4 style=margin-top:10px>Untapped (searched, not sold)</h4>${d.untapped.map(k=>`<span class="tag hot">${esc(k)}</span>`).join('')||'<span class=sub>none</span>'}
+<h4 style=margin-top:10px>Search intent</h4>${intent(d.intent)}</div>`;
+const gaps=`<div><h4>Asset gaps: demand vs supply</h4><table><tr><th>Asset<th>Demand<th>Supply<th></tr>${d.gaps.map(g=>`<tr title="${esc(g.queries.join(' | '))}"><td>${esc(g.asset)}<td>${g.demand}<td>${g.supply}<td><span class="pill ${g.status}">${g.status}</span></tr>`).join('')||'<tr><td colspan=4 class=sub>no confirmed demand yet</tr>'}</table>
+<h4 style=margin-top:10px>Being sold now (Amazon/eBay)</h4>${d.sold.map(s=>`<span class=tag>${esc(s)}</span>`).join('')||'<span class=sub>nothing yet = wide open</span>'}
+<h4 style=margin-top:10px>Unconfirmed ideas</h4>${d.speculative.map(s=>`<span class=tag>${esc(s)}</span>`).join('')}</div>`;
+return left+kw+gaps}
+function render(){const q=$('#q').value.toLowerCase();
+$('#list').innerHTML=D.trends.filter(t=>(filter=='all'||t.size==filter)&&t.term.includes(q)).map(row).join('')||'<p class=sub>No data yet.</p>';
+document.querySelectorAll('.row').forEach(r=>r.querySelector('.head').onclick=async()=>{const t=r.dataset.t;
+if(open_.has(t)){open_.delete(t);r.classList.remove('open');return}open_.add(t);r.classList.add('open');
+const tr=D.trends.find(x=>x.term==t);if(!tr.deep&&!deepc[t]){deepc[t]=await(await fetch('/api/deep?term='+encodeURIComponent(t))).json();render()}})}
+async function load(){try{D=await(await fetch('/api/trends')).json()}catch(e){return}
+$('#meta').textContent=D.updated?`updated ${new Date(D.updated*1e3).toLocaleTimeString()} · ${D.trends.length} trends · next scan ${new Date(D.next*1e3).toLocaleTimeString()} · score = freshness+volume+open gaps+buy intent−crowding ${D.error?'· '+D.error:''}`:'first scan running (~1 min)…';render()}
+document.querySelectorAll('button[data-f]').forEach(b=>b.onclick=()=>{filter=b.dataset.f;document.querySelectorAll('button[data-f]').forEach(x=>x.classList.toggle('on',x==b));render()});
+$('#q').oninput=render;load();setInterval(load,20000)
+</script>
