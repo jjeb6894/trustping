@@ -5,7 +5,7 @@ Every 5 min: Google Trends -> per trend: history (times trended, volume), visits
 pageviews), mentions (news, HN), what's sold (Amazon/eBay autocomplete), keyword intent %,
 and asset gaps (Google demand vs marketplace supply).
 """
-import argparse, datetime as dt, json, re, sqlite3, threading, time, urllib.parse
+import argparse, datetime as dt, email.utils, html, json, re, sqlite3, subprocess, threading, time, urllib.parse
 import xml.etree.ElementTree as ET
 from concurrent.futures import ThreadPoolExecutor
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -124,6 +124,38 @@ def hn_mentions(term):
     return cached(("h", term), 1800, go) or 0
 
 
+def poshmark(term):
+    """Live listings (title, thumbnail, price) from Poshmark search, cheapest first."""
+    def go():
+        raw = subprocess.run(["curl", "-s", "-L", "--max-time", "20", "-A", scanner.UA,  # urllib's TLS fingerprint gets a 403
+                              "https://poshmark.com/search?query=" + urllib.parse.quote(term)],
+                             capture_output=True, timeout=30).stdout.decode("utf-8", "ignore")
+        words = [w for w in re.findall(r"[a-z0-9]+", term.lower()) if len(w) > 2]
+        items = []
+        for tile in raw.split('tiles_container__tile--redesign">')[1:25]:
+            href = re.search(r'href="(/listing/[^"]+)"', tile)
+            img = re.search(r'<img src="([^"]+)" alt="([^"]*)"', tile)
+            price = re.search(r"\$\s?([\d,]+(?:\.\d+)?)", tile)
+            if not (href and img and price):
+                continue
+            title = html.unescape(img.group(2))
+            if words and not all(w in re.sub(r"[^a-z0-9]+", " ", title.lower()) for w in words):
+                continue
+            items.append({"title": title[:90], "img": img.group(1), "price": float(price.group(1).replace(",", "")),
+                          "url": "https://poshmark.com" + href.group(1), "store": "Poshmark"})
+        return sorted(items, key=lambda i: i["price"])[:6]
+    return cached(("p", term), 1800, go) or []
+
+
+def est_volume(total, rank):
+    """Rough searches for the rank-th autocomplete keyword, from the trend's Google volume bucket."""
+    return int(max(10, total * 0.35 / (rank ** 0.8)))
+
+
+def slug(text):
+    return re.sub(r"-+", "-", re.sub(r"[^a-z0-9]+", "-", text.lower())).strip("-")
+
+
 def classify(keywords):
     c = {"informational": 0, "commercial": 0, "transactional": 0, "navigational": 0}
     for k in keywords:
@@ -151,7 +183,7 @@ def history(term):
             "peak": max(r[2] for r in rows)}
 
 
-def deep(term, size):
+def deep(term, size, volume=0):
     """Slower per-term enrichment: keywords, intent, marketplace supply, gaps."""
     base = [q for q in google_ac(term) if q.lower() != term.lower()]
     extra = []
@@ -176,9 +208,25 @@ def deep(term, size):
                      "status": "OPEN" if supply == 0 else "contested" if supply < 4 else "crowded"})
     rows.sort(key=lambda r: (r["supply"], -r["demand"]))
     keywords = list(dict.fromkeys(base + extra + [q for _, r in res for q in r]))
-    kw = [{"kw": k, "pos": i + 1, "sold": k.lower() in sold_text} for i, k in enumerate(base[:10])]
+    volume = volume or 1000
+    kw = [{"kw": k, "pos": i + 1, "sold": k.lower() in sold_text, "vol": est_volume(volume, i + 1)}
+          for i, k in enumerate(base[:10])]
     untapped = [k["kw"] for k in kw if not k["sold"]][:6]
-    return {"keywords": kw, "intent": classify(keywords), "sold": sold, "gaps": rows,
+    top3 = kw[:3]
+    seen = {k["kw"] for k in kw[:3]}
+    lowvol = [{"kw": k["kw"], "vol": k["vol"], "sold": k["sold"]} for k in kw[3:]]
+    for a, hits in demand.items():
+        for q in hits[:2]:
+            if q not in seen and q not in {x["kw"] for x in lowvol}:
+                lowvol.append({"kw": q, "vol": est_volume(volume, 12 + len(lowvol)), "sold": False})
+    lowvol = sorted(lowvol, key=lambda x: (x["sold"], x["vol"]))[:8]
+    items = poshmark(term)
+    stores = [{"name": "Poshmark", "n": len(items), "url": "https://poshmark.com/search?query=" + urllib.parse.quote(term)},
+              {"name": "Amazon", "n": len(sold_a), "url": "https://www.amazon.com/s?k=" + urllib.parse.quote(term)},
+              {"name": "eBay", "n": len(ebay_ac(term)), "url": "https://www.ebay.com/sch/i.html?_nkw=" + urllib.parse.quote(term)},
+              {"name": "Etsy", "n": None, "url": "https://www.etsy.com/search?q=" + urllib.parse.quote(term)}]
+    return {"keywords": kw, "top3": top3, "top3_total": sum(k["vol"] for k in top3), "lowvol": lowvol,
+            "items": items, "stores": stores, "intent": classify(keywords), "sold": sold, "gaps": rows,
             "untapped": untapped, "speculative": [a for a, r in res if not r][:8],
             "note": ("Big: heavy competition, win on speed + narrow angle." if size == "big"
                      else "Small: little competition, one good asset can own it.")}
@@ -195,6 +243,10 @@ def score(t):
     return max(0, min(100, round(s)))
 
 
+def now_ts():
+    return time.time()
+
+
 def google_trends():
     root = ET.fromstring(scanner.fetch(f"https://trends.google.com/trending/rss?geo={scanner.GEO}", False))
     out = []
@@ -202,7 +254,9 @@ def google_trends():
         news = [{"title": n.findtext(HT + "news_item_title") or "", "source": n.findtext(HT + "news_item_source") or "",
                  "url": n.findtext(HT + "news_item_url") or ""} for n in it.findall(HT + "news_item")][:4]
         out.append({"term": (it.findtext("title") or "").strip(), "rank": rank,
-                    "traffic": traffic_num(it.findtext(HT + "approx_traffic")), "news": news})
+                    "traffic": traffic_num(it.findtext(HT + "approx_traffic")), "news": news,
+                    "pub": email.utils.parsedate_to_datetime(it.findtext("pubDate")).timestamp()
+                    if it.findtext("pubDate") else now_ts()})
     return out
 
 
@@ -217,7 +271,7 @@ def refresh():
         h = history(t["term"])
         trends.append({"term": t["term"], "rank": t["rank"], "volume": t["traffic"], "volume_fmt": fmt(t["traffic"]),
                        "size": "big" if t["traffic"] >= 100_000 else "small", "news": t["news"], "hist": h,
-                       "age_min": int((now - h["first"]) / 60)})
+                       "age_min": max(0, int((now - min(h["first"], t["pub"])) / 60))})
     def enrich(t):
         w = wiki_info(t["term"])
         v = w.get("views", [])
@@ -228,7 +282,7 @@ def refresh():
     with ThreadPoolExecutor(5) as ex:
         list(ex.map(enrich, trends))
     with ThreadPoolExecutor(4) as ex:
-        for t, d in zip(trends[:15], ex.map(lambda x: deep(x["term"], x["size"]), trends[:15])):
+        for t, d in zip(trends[:15], ex.map(lambda x: deep(x["term"], x["size"], x["volume"]), trends[:15])):
             t["deep"] = d
     for t in trends:
         t["score"] = score(t)
@@ -267,8 +321,8 @@ class H(BaseHTTPRequestHandler):
                 self.send(json.dumps(STATE), "application/json")
         elif u.path == "/api/deep":
             term = urllib.parse.parse_qs(u.query).get("term", [""])[0]
-            size = next((t["size"] for t in STATE["trends"] if t["term"] == term), "small")
-            self.send(json.dumps(deep(term, size)), "application/json")
+            cur = next((t for t in STATE["trends"] if t["term"] == term), {})
+            self.send(json.dumps(deep(term, cur.get("size", "small"), cur.get("volume", 0))), "application/json")
         elif u.path == "/":
             self.send((HERE / "dashboard.html").read_text(), "text/html; charset=utf-8")
         else:
