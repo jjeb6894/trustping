@@ -9,7 +9,3 @@ binding = "ASSETS"
 
 [observability]
 enabled = true
-
-[[routes]]
-pattern = "verticified.com"
-custom_domain = true
