@@ -2,7 +2,7 @@
   "name": "trustping",
   "version": "0.1.0",
   "private": true,
-  "description": "TrustPing prototype — simulated trust scores on Cloudflare Workers.",
+  "description": "TrustLink prototype — simulated trust scores on Cloudflare Workers.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

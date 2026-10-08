@@ -1,7 +1,7 @@
 const TESTIMONIALS = [
   {
     quote:
-      "I almost bought a car with cloned photos from another listing. TrustPing's reverse image check caught it in seconds.",
+      "I almost bought a car with cloned photos from another listing. TrustLink's reverse image check caught it in seconds.",
     name: "Dana R.",
     role: "Buyer, AutoTrader",
     memberSince: "Member since 2020",

@@ -4,9 +4,9 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "TrustPing — Trust Score for any listing or profile",
+  title: "TrustLink — Trust Score for any listing or profile",
   description:
-    "Explore the TrustPing prototype. Trust scores are simulated; no listings are verified and no insurance coverage is provided.",
+    "Explore the TrustLink prototype. Trust scores are simulated; no listings are verified and no insurance coverage is provided.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

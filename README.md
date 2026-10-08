@@ -1,10 +1,10 @@
-# TrustPing
+# TrustLink
 
 > Paste a link to any listing or profile. Get a Trust Score. Insure the transaction.
 >
-> **Note:** "TrustPing" is a working/package name used throughout this repo (package name,
-> folder names, etc.). It's a placeholder — feel free to rebrand without heavy surgery; the
-> name mostly lives in `package.json`, page copy, and a few component strings.
+> **Note:** The product is branded **TrustLink**. The package name (`trustping`), Worker name
+> and repo name are legacy identifiers, intentionally unchanged to avoid touching deployment.
+> The logo lives in `components/Logo.tsx` and `app/icon.svg`.
 
 ## What this is
 
@@ -15,7 +15,7 @@ A full-stack scaffold for a marketplace/profile trust-verification platform:
 - The app detects the platform from the URL, runs a **Trust Check pipeline** (reverse image
   search, AI-generated image detection, cross-platform identity match, account age/history,
   review sentiment), and produces a **Trust Score (0-100)**.
-- Score ≥ 90 → **Insured Verified** (TrustPing financially backs the transaction; claims form
+- Score ≥ 90 → **Insured Verified** (TrustLink financially backs the transaction; claims form
   included). Score 70-89 → **Trusted**. Users can request paid **Human Validation** for a
   manual review.
 - Sellers can subscribe to keep listings continuously checked; one-off checks and human

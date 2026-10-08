@@ -1,5 +1,5 @@
 /**
- * Shared domain types for TrustPing.
+ * Shared domain types for TrustLink.
  */
 
 export type PlatformCategory =
