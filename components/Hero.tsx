@@ -19,7 +19,7 @@ export function Hero() {
             Get a <span className="text-brand-500">Trust Score</span>.
           </h1>
           <p className="mt-4 max-w-md text-lg text-slate-600">
-            Explore the planned TrustPing workflow for marketplace listings and profiles.
+            Explore the planned TrustLink workflow for marketplace listings and profiles.
             Results and activity shown here are simulated; no listings are verified and no
             insurance coverage is offered.
           </p>

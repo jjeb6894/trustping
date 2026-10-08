@@ -29,7 +29,7 @@ const DEFAULT_LISTING = { title: "Sample listing", price: "—", meta: "" };
 
 /**
  * Shows a few mock "listing screenshot" cards from the detected country's
- * actual buying/selling sites, each stamped with a live TrustPing badge —
+ * actual buying/selling sites, each stamped with a live TrustLink badge —
  * a preview of what the badge looks like once it's on a real listing.
  */
 export function LocalListingShowcase() {
@@ -45,7 +45,7 @@ export function LocalListingShowcase() {
         {board.flag} The badge, live on {board.countryName}&rsquo;s own listings
       </h2>
       <p className="mt-2 max-w-xl text-slate-600">
-        A preview of how TrustPing looks once it&rsquo;s stamped directly onto listings from the
+        A preview of how TrustLink looks once it&rsquo;s stamped directly onto listings from the
         sites people in your region already use to buy and sell.
       </p>
       <div className="mt-8 grid gap-6 md:grid-cols-3">

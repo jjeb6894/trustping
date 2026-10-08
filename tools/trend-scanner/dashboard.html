@@ -1,0 +1,105 @@
+<!doctype html><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Trend Radar</title>
+<style>
+:root{--bg:#0d0f14;--card:#161a22;--line:#262c38;--tx:#e8eaf0;--mut:#8b93a5;--g:#2ecc71;--y:#f1c40f;--r:#e74c3c;--b:#4da3ff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.45 system-ui,sans-serif}
+header{position:sticky;top:0;background:#0d0f14ee;backdrop-filter:blur(6px);padding:10px 20px;border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:center;flex-wrap:wrap;z-index:5}
+h1{font-size:18px;margin:0 6px 0 0}.meta{color:var(--mut);font-size:12px;flex:1;min-width:200px}
+button,input,select,textarea{background:var(--card);color:var(--tx);border:1px solid var(--line);border-radius:8px;padding:6px 10px;font:inherit}
+button{cursor:pointer}button.on{border-color:var(--b);color:var(--b)}button:hover{border-color:var(--b)}
+header input{width:150px}header input.s{width:60px}main{max-width:1350px;margin:auto;padding:12px 20px}
+.row{background:var(--card);border:1px solid var(--line);border-radius:12px;margin:10px 0;overflow:hidden}
+.head{display:grid;grid-template-columns:120px 1.7fr .8fr 1.3fr;gap:16px;padding:12px 14px;cursor:pointer;align-items:start}
+.head:hover{background:#1b2029}
+.vol{text-align:center}.vol .n{font-size:30px;font-weight:800;color:var(--g);line-height:1.1}.vol .l{font-size:10px;color:var(--mut);text-transform:uppercase;letter-spacing:.05em}
+.badge{display:inline-block;margin-top:6px;font-size:11px;padding:1px 8px;border-radius:99px;border:1px solid}
+.term{font-weight:650;font-size:17px}.sub{color:var(--mut);font-size:12px}.k{color:var(--mut);font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+.kws{margin-top:6px;display:flex;flex-direction:column;gap:3px}.kw{display:flex;gap:8px;align-items:center;font-size:13px}
+.kw b{width:20px;height:20px;border-radius:50%;background:#222a38;color:var(--b);display:grid;place-items:center;font-size:11px;flex:none}
+.kw .t{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.kw .v{color:var(--g);font-weight:650;font-variant-numeric:tabular-nums}
+.watch{font-size:18px;font-weight:650}.up{color:var(--g)}
+.pill{display:inline-block;padding:1px 8px;border-radius:99px;font-size:11px;margin-right:4px}
+.big{background:#5b2630}.small{background:#1d4d33}.OPEN{background:#1d4d33;color:#7dffb0}.contested{background:#5a4a14;color:#ffe08a}.crowded{background:#5b2630;color:#ff9aa8}
+.items{display:flex;gap:8px;flex-wrap:wrap}.it{width:84px;font-size:11px;color:var(--tx);text-decoration:none}
+.it img{width:84px;height:84px;object-fit:cover;border-radius:8px;display:block;background:#222a38}.it .p{color:var(--g);font-weight:700}.it .s{color:var(--mut)}
+.it.big2{width:110px}.it.big2 img{width:110px;height:110px}
+.det{display:none;border-top:1px solid var(--line);padding:14px;grid-template-columns:1fr 1fr 1fr;gap:20px}.open .det{display:grid}
+h4{margin:12px 0 6px;font-size:12px;color:var(--mut);text-transform:uppercase;letter-spacing:.05em}h4:first-child{margin-top:0}
+.tag{display:inline-block;background:#222a38;border-radius:6px;padding:2px 8px;margin:2px 2px 2px 0;font-size:12px}.tag.hot{background:#1d4d33}
+.bar{height:8px;border-radius:4px;background:#222a38;margin:3px 0 8px;overflow:hidden}.bar i{display:block;height:100%}
+a{color:var(--b);text-decoration:none}a:hover{text-decoration:underline}svg{display:block}
+table{width:100%;border-collapse:collapse;font-size:12px}td,th{padding:3px 6px;text-align:left;border-bottom:1px solid var(--line)}
+.lv{display:grid;grid-template-columns:150px 1fr auto;gap:8px;align-items:start;margin:8px 0}.lv .t{font-size:13px}.lv .v{color:var(--y);font-weight:650}
+textarea{width:100%;height:84px;font-size:11.5px;resize:vertical}.copy{white-space:nowrap}.copy.ok{border-color:var(--g);color:var(--g)}
+.full{grid-column:1/-1}.stores a{margin-right:10px;font-size:12px}
+@media(max-width:1000px){.head{grid-template-columns:100px 1fr}.det{grid-template-columns:1fr}.lv{grid-template-columns:1fr}}
+</style>
+<header><h1>📡 Trend Radar</h1><span class=meta id=meta>loading… first scan takes ~1 min</span>
+<input id=q placeholder="filter…" style="width:110px"><button data-f=all class=on>All</button><button data-f=small>Small</button><button data-f=big>Big</button>
+<select id=sort><option value=vol>Sort: searches</option><option value=score>Sort: score</option><option value=new>Sort: newest</option></select>
+<input id=dom title="Your Cloudflare domain" placeholder="mydomain.com"><input id=mk class=s title="Profit markup %" type=number value=50>%</header>
+<main id=list></main>
+<script>
+const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let D={trends:[]},filter='all',open_=new Set(),deepc={},edits=JSON.parse(localStorage.edits||'{}'),lastKey='';
+$('#dom').value=localStorage.dom||'mydomain.com';$('#mk').value=localStorage.mk2||50;
+const fmtN=n=>n>=1e6?(n/1e6).toFixed(1)+'M':n>=1e3?(n/1e3).toFixed(n>=1e4?0:1)+'K':String(Math.round(n));
+const fmtT=m=>m<1?'just now':m<60?m+' min ago':m<1440?Math.floor(m/60)+' h '+String(m%60).padStart(2,'0')+' m ago':Math.floor(m/1440)+' d ago';
+const col=s=>s>=65?'var(--g)':s>=40?'var(--y)':'var(--r)';
+const slug=s=>s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+function spark(a,w=110,h=26){if(!a||a.length<2)return'';const mx=Math.max(...a)||1,mn=Math.min(...a);
+const p=a.map((v,i)=>(i/(a.length-1)*w).toFixed(1)+','+(h-2-(v-mn)/((mx-mn)||1)*(h-4)).toFixed(1)).join(' ');
+return`<svg width=${w} height=${h}><polyline points="${p}" fill=none stroke="#4da3ff" stroke-width=2 /></svg>`}
+function intent(i){const c={informational:'#4da3ff',commercial:'#f1c40f',transactional:'#2ecc71',navigational:'#9b59b6'};
+return Object.entries(i).map(([k,v])=>`<div class=sub>${k} ${v}%</div><div class=bar><i style="width:${v}%;background:${c[k]}"></i></div>`).join('')}
+function prompt(term,kws){const d=$('#dom').value||'mydomain.com',m=$('#mk').value||50;
+const lines=kws.map((k,i)=>`${i+1}. https://${d}/${slug(k.kw)}   (keyword: "${k.kw}"${k.vol?', ~'+fmtN(k.vol)+' searches':''})`).join('\n');
+return `On my domain hosted on Cloudflare, make ${kws.length>1?kws.length+' pages with these slugs':'a page with this slug'}:\n${lines}\nThese are items being sold for the trend "${term}". For each item, find where it is selling the cheapest right now and increase that price by ${m}%.`}
+function pbox(key,term,kws,label){const v=edits[key]??prompt(term,kws);
+return`<div><textarea data-k="${esc(key)}">${esc(v)}</textarea></div><button class=copy data-lbl="${label||'Copy prompt'}">${label||'Copy prompt'}</button>`}
+function ebayDraft(t,d,i,n){const m=+($('#mk').value||50),cost=i.price,list=Math.ceil(cost*(1+m/100))-0.01,
+safe=Math.ceil((cost*(1+m/100)+0.30)/(1-0.1325))-0.01,kw=d.top3[0]?d.top3[0].kw:t.term;
+const clean=i.title.replace(/[^\w\s&'-]/g,' ').replace(/\s+/g,' ').trim(),title=(clean.toLowerCase().includes(t.term.toLowerCase())?clean:t.term+' '+clean).slice(0,80);
+const text=`TITLE (${title.length}/80):\n${title}\n\nPRICE: $${list.toFixed(2)}  (cost $${cost} + ${m}%)\nPRICE AFTER EBAY FEES (~13.25% + $0.30): $${safe.toFixed(2)}\n\nDESCRIPTION:\n${i.title}\nCondition: <fill in after inspecting>\nTrending: ${t.term}. Ships within 1 business day.\n\nPHOTOS: use your own photos of the item you own.`;
+const key='eb:'+t.term+':'+n;return`<div class=lv style="grid-template-columns:70px 1fr auto"><a class=it href="${esc(i.url)}" target=_blank><img src="${esc(i.img)}" style="width:70px;height:70px"></a>${pbox(key,t.term,[],'Copy listing').replace(/<textarea([^>]*)>[^<]*<\/textarea>/,(x,a)=>`<textarea${a}>${esc(edits[key]??text)}</textarea>`)}</div>`}
+function items(list,cls=''){return list.map(i=>`<a class="it ${cls}" href="${esc(i.url)}" target=_blank title="${esc(i.title)}"><img loading=lazy src="${esc(i.img)}"><div class=p>$${i.price}</div><div class=s>${esc(i.store)}</div></a>`).join('')}
+function row(t){const d=t.deep||deepc[t.term],w=t.wiki||{},h=t.hist||{},m=t.mentions||{},n=m.news||{};
+const ratio=w.avg?w.yesterday/w.avg:0;
+const kws=d?d.top3.map((k,i)=>`<div class=kw><b>${i+1}</b><span class=t>${esc(k.kw)}</span><span class=v>~${fmtN(k.vol)}</span></div>`).join(''):'<div class=sub>analysing keywords…</div>';
+const sell=d&&d.items.length?`<div class=items>${items(d.items.slice(0,3))}</div>`:`<div class=sub>${d?'No listings found yet — possibly wide open':'loading…'}</div>`;
+return`<div class="row ${open_.has(t.term)?'open':''}" data-t="${esc(t.term)}"><div class=head>
+<div class=vol><div class=n>${d&&d.top3_total?fmtN(d.top3_total):fmtN(t.volume)}</div><div class=l>searching · top 3 kw (est.)</div><span class=badge style="border-color:${col(t.score)};color:${col(t.score)}" title="Opportunity score">score ${t.score}</span></div>
+<div><div class=term>${esc(t.term)} <span class="pill ${t.size}">${t.size}</span></div><div class=sub>Google #${t.rank} · ${esc((t.news[0]||{}).title||'no headline yet').slice(0,90)}</div><div class=kws>${kws}</div></div>
+<div><div class=k>First seen</div><div class=watch>⌚ ${fmtT(t.age_min)}</div><div class=sub>trended ${h.runs||1}× · best #${h.best_rank||t.rank}</div>
+<div class=sub style="margin-top:6px">👁 ${(w.yesterday||0).toLocaleString()} wiki/day ${ratio>=1.5?'<span class=up>'+ratio.toFixed(1)+'×</span>':''}</div><div class=sub>📰 ${n.d1??'…'} news/24h · HN ${m.hn??'…'}</div></div>
+<div><div class=k>🛒 Selling now (cheapest first)</div>${sell}</div></div>
+<div class=det>${detail(t,d)}</div></div>`}
+function detail(t,d){const why=t.news.map(n=>`<div><a href="${esc(n.url)}" target=_blank>${esc(n.title)}</a> <span class=sub>${esc(n.source)}</span></div>`).join('');
+const left=`<div><h4>Why it's trending</h4>${why||'–'}<p class=sub>${esc(t.about)}</p><h4>Opportunity</h4><div class=sub>${d?esc(d.note):''}</div>${spark(t.hist.spark,200,34)}<div class=sub>volume across scans</div></div>`;
+if(!d)return left+'<div class=sub>loading analysis…</div><div></div>';
+const sell=`<div><h4>Selling right now</h4><div class=items>${items(d.items,'big2')||''}</div>${d.items.length?'':'<div class=sub>nothing found on Poshmark</div>'}
+<h4>Check stores</h4><div class=stores>${d.stores.map(s=>`<a href="${esc(s.url)}" target=_blank>${s.name}${s.n?' ('+s.n+')':''}</a>`).join('')}</div>
+<h4>Sold on Amazon/eBay (suggestions)</h4>${d.sold.map(s=>`<span class=tag>${esc(s)}</span>`).join('')||'<span class=sub>nothing = wide open</span>'}</div>`;
+const gaps=`<div><h4>Search intent</h4>${intent(d.intent)}<h4>Asset gaps: demand vs supply</h4><table><tr><th>Asset<th>Demand<th>Supply<th></tr>${d.gaps.map(g=>`<tr title="${esc(g.queries.join(' | '))}"><td>${esc(g.asset)}<td>${g.demand}<td>${g.supply}<td><span class="pill ${g.status}">${g.status}</span></tr>`).join('')||'<tr><td colspan=4 class=sub>no confirmed demand yet</tr>'}</table></div>`;
+const low=`<div class=full><h4>🎯 Low-volume keywords people search (little competition)</h4>${d.lowvol.map((k,i)=>`<div class=lv><div class=t>${esc(k.kw)}<br><span class=v>~${fmtN(k.vol)}</span> <span class=sub>${k.sold?'sold':'not sold'}</span></div>${pbox('lv:'+t.term+':'+k.kw,t.term,[k])}</div>`).join('')||'<span class=sub>none found</span>'}</div>`;
+const eb=`<div class=full><h4>🏷 eBay listing draft (test one item) — list only items you own, with your own photos</h4>${d.items.slice(0,3).map((i,n)=>ebayDraft(t,d,i,n)).join('')||'<span class=sub>no reference items</span>'}</div>`;
+const main=`<div class=full><h4>🌐 Pages for the top 3 keywords</h4><div class=lv style="grid-template-columns:1fr auto">${pbox('top:'+t.term,t.term,d.top3,'Copy prompt')}</div></div>`;
+return left+sell+gaps+eb+main+low}
+function sorted(){const a=[...D.trends],s=$('#sort').value;
+a.sort(s=='vol'?(x,y)=>((y.deep||{}).top3_total||y.volume)-((x.deep||{}).top3_total||x.volume):s=='new'?(x,y)=>x.age_min-y.age_min:(x,y)=>y.score-x.score);return a}
+function render(force){const ae=document.activeElement;if(!force&&ae&&ae.tagName=='TEXTAREA')return;
+const q=$('#q').value.toLowerCase();
+$('#list').innerHTML=sorted().filter(t=>(filter=='all'||t.size==filter)&&t.term.includes(q)).map(row).join('')||'<p class=sub>No data yet.</p>';
+document.querySelectorAll('.row').forEach(r=>r.querySelector('.head').onclick=async()=>{const t=r.dataset.t;
+if(open_.has(t)){open_.delete(t);r.classList.remove('open');return}open_.add(t);r.classList.add('open');
+const tr=D.trends.find(x=>x.term==t);if(!tr.deep&&!deepc[t]){deepc[t]=await(await fetch('/api/deep?term='+encodeURIComponent(t))).json();render(true)}});
+document.querySelectorAll('textarea').forEach(a=>a.oninput=()=>{edits[a.dataset.k]=a.value;localStorage.edits=JSON.stringify(edits)});
+document.querySelectorAll('.copy').forEach(b=>b.onclick=async()=>{const a=b.previousElementSibling.querySelector('textarea');
+try{await navigator.clipboard.writeText(a.value)}catch(e){a.select();document.execCommand('copy')}const lbl=b.dataset.lbl;b.textContent='Copied ✓';b.classList.add('ok');setTimeout(()=>{b.textContent=lbl;b.classList.remove('ok')},1500)})}
+async function load(){try{D=await(await fetch('/api/trends')).json()}catch(e){return}
+$('#meta').textContent=D.updated?`updated ${new Date(D.updated*1e3).toLocaleTimeString()} · ${D.trends.length} trends · next scan ${new Date(D.next*1e3).toLocaleTimeString()} · volumes are estimates ${D.error?'· '+D.error:''}`:'first scan running (~1 min)…';
+if(String(D.updated)!==lastKey){lastKey=String(D.updated);render()}}
+document.querySelectorAll('button[data-f]').forEach(b=>b.onclick=()=>{filter=b.dataset.f;document.querySelectorAll('button[data-f]').forEach(x=>x.classList.toggle('on',x==b));render(true)});
+$('#q').oninput=()=>render(true);$('#sort').onchange=()=>render(true);
+$('#dom').oninput=()=>{localStorage.dom=$('#dom').value;render(true)};$('#mk').oninput=()=>{localStorage.mk2=$('#mk').value;render(true)};
+load();setInterval(load,15000)
+</script>

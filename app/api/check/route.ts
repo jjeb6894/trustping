@@ -3,6 +3,7 @@ import { randomUUID } from "node:crypto";
 import { detectPlatform } from "@/lib/adapters";
 import { aggregateScore, runCheckPipeline, tierForScore } from "@/lib/scoring";
 import type { TrustScoreResult } from "@/types";
+import { saveAutoTraderPhoto } from "@/lib/listing-photo";
 
 /**
  * Main Trust Check pipeline endpoint: POST { url } -> TrustScoreResult.
@@ -32,6 +33,10 @@ export async function POST(request: Request) {
     );
   }
 
+  const photoUrl = adapter.id === "autotrader"
+    ? await saveAutoTraderPhoto(url).catch(() => null)
+    : null;
+
   const checks = runCheckPipeline(url, adapter.checks);
   const score = aggregateScore(checks);
   const { tier, label } = tierForScore(score);
@@ -45,6 +50,7 @@ export async function POST(request: Request) {
     tier,
     tierLabel: label,
     checks,
+    photoUrl: photoUrl ?? undefined,
     createdAt: new Date().toISOString(),
   };
 

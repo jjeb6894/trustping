@@ -1,5 +1,5 @@
 /**
- * Shared domain types for TrustPing.
+ * Shared domain types for TrustLink.
  */
 
 export type PlatformCategory =
@@ -67,6 +67,7 @@ export interface TrustScoreResult {
   tier: TrustTier;
   tierLabel: string;
   checks: CheckResult[];
+  photoUrl?: string;
   createdAt: string;
 }
 

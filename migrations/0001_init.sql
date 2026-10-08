@@ -1,4 +1,4 @@
--- TrustPing initial schema
+-- TrustLink initial schema
 -- Apply locally: npm run db:migrate:local
 -- Apply remote:  npm run db:migrate:remote
 
