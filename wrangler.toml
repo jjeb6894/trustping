@@ -7,9 +7,5 @@ compatibility_flags = ["nodejs_compat"]
 directory = ".open-next/assets"
 binding = "ASSETS"
 
-[[r2_buckets]]
-binding = "LISTING_PHOTOS"
-bucket_name = "verticified-listing-photos"
-
 [observability]
 enabled = true
