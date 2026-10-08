@@ -67,6 +67,7 @@ export interface TrustScoreResult {
   tier: TrustTier;
   tierLabel: string;
   checks: CheckResult[];
+  photoUrl?: string;
   createdAt: string;
 }
 
